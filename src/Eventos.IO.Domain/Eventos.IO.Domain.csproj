@@ -5,8 +5,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Eventos\CommandHandlers\**" />
+    <Compile Remove="Eventos\EventHandlers\**" />
     <Compile Remove="Models\**" />
+    <EmbeddedResource Remove="Eventos\CommandHandlers\**" />
+    <EmbeddedResource Remove="Eventos\EventHandlers\**" />
     <EmbeddedResource Remove="Models\**" />
+    <None Remove="Eventos\CommandHandlers\**" />
+    <None Remove="Eventos\EventHandlers\**" />
     <None Remove="Models\**" />
   </ItemGroup>
 
