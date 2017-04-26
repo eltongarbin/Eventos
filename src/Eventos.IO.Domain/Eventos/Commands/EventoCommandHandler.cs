@@ -29,47 +29,49 @@ namespace Eventos.IO.Domain.Eventos.Commands
 
         public void Handle(RegistrarEventoCommand message)
         {
-            var evento = new Evento
-            (
-                message.Nome,
-                message.DataInicio,
-                message.DataFim,
-                message.Gratuito,
-                message.Valor,
-                message.Online,
-                message.NomeEmpresa
-            );
+            var evento = Evento.EventoFactory.NovoEventoCompleto(message.Id,
+                                                                 message.Nome,
+                                                                 message.DescricaoCurta,
+                                                                 message.DescricaoLonga,
+                                                                 message.DataInicio,
+                                                                 message.DataFim,
+                                                                 message.Gratuito,
+                                                                 message.Valor,
+                                                                 message.Online,
+                                                                 message.NomeEmpresa,
+                                                                 message.OrganizadorId,
+                                                                 message.Endereco,
+                                                                 message.Categoria.Id);
 
-            if (!EventoValido(evento))
-                return;
+            if (!EventoValido(evento)) return;
 
             // TODO:
             // Validações de negócio!
             // Organizador pode registrar evento?
 
-            _eventoRepository.Add(evento);
+            _eventoRepository.Adicionar(evento);
 
             if (Commit())
             {
-                _bus.RaiseEvent(new EventoRegistradoEvent
-                    (
-                        evento.Id,
-                        evento.Nome,
-                        evento.DataInicio,
-                        evento.DataFim,
-                        evento.Gratuito,
-                        evento.Valor,
-                        evento.Online,
-                        evento.NomeEmpresa
-                    )
-                );
+                _bus.RaiseEvent(new EventoRegistradoEvent(evento.Id,
+                                                          evento.Nome,
+                                                          evento.DataInicio,
+                                                          evento.DataFim,
+                                                          evento.Gratuito,
+                                                          evento.Valor,
+                                                          evento.Online,
+                                                          evento.NomeEmpresa));
             }
         }
 
         public void Handle(AtualizarEventoCommand message)
         {
+            var eventoAtual = _eventoRepository.ObterPorId(message.Id);
+
             if (!EventoExistente(message.Id, message.MessageType))
                 return;
+
+            // TODO: Validar se o evento pertence a pessoa que está editando.
 
             var evento = Evento.EventoFactory.NovoEventoCompleto(message.Id,
                                                                  message.Nome,
@@ -81,12 +83,14 @@ namespace Eventos.IO.Domain.Eventos.Commands
                                                                  message.Valor,
                                                                  message.Online,
                                                                  message.NomeEmpresa,
-                                                                 null);
+                                                                 message.OrganizadorId,
+                                                                 eventoAtual.Endereco,
+                                                                 message.Categoria.Id);
 
             if (!EventoValido(evento))
                 return;
 
-            _eventoRepository.Update(evento);
+            _eventoRepository.Atualizar(evento);
 
             if (Commit())
             {
@@ -108,7 +112,7 @@ namespace Eventos.IO.Domain.Eventos.Commands
             if (!EventoExistente(message.Id, message.MessageType))
                 return;
 
-            _eventoRepository.Remove(message.Id);
+            _eventoRepository.Remover(message.Id);
 
             if (Commit())
                 _bus.RaiseEvent(new EventoExcluidoEvent(message.Id));
@@ -116,7 +120,7 @@ namespace Eventos.IO.Domain.Eventos.Commands
 
         private bool EventoValido(Evento evento)
         {
-            if (evento.IsValid())
+            if (evento.EhValido())
                 return true;
 
             NotificarValidacoesErro(evento.ValidationResult);
@@ -125,7 +129,7 @@ namespace Eventos.IO.Domain.Eventos.Commands
 
         private bool EventoExistente(Guid id, string messageType)
         {
-            var evento = _eventoRepository.GetById(id);
+            var evento = _eventoRepository.ObterPorId(id);
 
             if (evento != null)
                 return true;
