@@ -10,7 +10,7 @@ namespace Eventos.IO.Domain.Organizadores
             Id = id;
         }
 
-        public override bool IsValid()
+        public override bool EhValido()
         {
             throw new NotImplementedException();
         }

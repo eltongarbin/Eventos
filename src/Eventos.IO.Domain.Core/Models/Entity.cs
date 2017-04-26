@@ -15,7 +15,7 @@ namespace Eventos.IO.Domain.Core.Models
             ValidationResult = new ValidationResult();
         }
 
-        public abstract bool IsValid();
+        public abstract bool EhValido();
 
         public override bool Equals(object obj)
         {
