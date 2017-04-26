@@ -9,8 +9,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Eventos.IO.Domain", "src\Ev
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Eventos.IO.Domain.Core", "src\Eventos.IO.Domain.Core\Eventos.IO.Domain.Core.csproj", "{760940DE-C01E-4CE8-BC89-81BF25CF16E3}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleTesting", "src\ConsoleTesting\ConsoleTesting.csproj", "{BEE267C1-9835-4D25-B1BF-E3A4F1AF80E9}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -25,10 +23,6 @@ Global
 		{760940DE-C01E-4CE8-BC89-81BF25CF16E3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{760940DE-C01E-4CE8-BC89-81BF25CF16E3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{760940DE-C01E-4CE8-BC89-81BF25CF16E3}.Release|Any CPU.Build.0 = Release|Any CPU
-		{BEE267C1-9835-4D25-B1BF-E3A4F1AF80E9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BEE267C1-9835-4D25-B1BF-E3A4F1AF80E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BEE267C1-9835-4D25-B1BF-E3A4F1AF80E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BEE267C1-9835-4D25-B1BF-E3A4F1AF80E9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -36,6 +30,5 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{4EAF31AE-349C-46E7-88C0-A4C151043D6D} = {6FFF3178-93F2-45FB-B804-E006CA8C78B0}
 		{760940DE-C01E-4CE8-BC89-81BF25CF16E3} = {6FFF3178-93F2-45FB-B804-E006CA8C78B0}
-		{BEE267C1-9835-4D25-B1BF-E3A4F1AF80E9} = {6FFF3178-93F2-45FB-B804-E006CA8C78B0}
 	EndGlobalSection
 EndGlobal
