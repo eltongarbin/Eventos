@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace Eventos.IO.Site.Models.ManageViewModels
+namespace Eventos.IO.Infra.CrossCutting.Identity.Models.ManageViewModels
 {
     public class VerifyPhoneNumberViewModel
     {

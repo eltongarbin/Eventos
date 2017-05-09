@@ -1,10 +1,8 @@
 ﻿using AutoMapper;
-using Eventos.IO.Domain.Interfaces;
 using Eventos.IO.Infra.CrossCutting.Bus;
+using Eventos.IO.Infra.CrossCutting.Identity.Data;
+using Eventos.IO.Infra.CrossCutting.Identity.Models;
 using Eventos.IO.Infra.CrossCutting.IoC;
-using Eventos.IO.Site.Data;
-using Eventos.IO.Site.Models;
-using Eventos.IO.Site.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -46,10 +44,6 @@ namespace Eventos.IO.Site
             services.AddMvc();
             services.AddAutoMapper();
 
-            services.AddTransient<IEmailSender, AuthMessageSender>();
-            services.AddTransient<ISmsSender, AuthMessageSender>();
-            services.AddScoped<IUser, AspNetUser>();
-
             RegisterServices(services);
         }
 
@@ -65,7 +59,6 @@ namespace Eventos.IO.Site
             {
                 app.UseDeveloperExceptionPage();
                 app.UseDatabaseErrorPage();
-                app.UseBrowserLink();
             }
             else
             {

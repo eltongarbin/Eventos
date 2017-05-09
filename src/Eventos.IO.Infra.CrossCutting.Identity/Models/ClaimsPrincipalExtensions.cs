@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Security.Claims;
 
-namespace Eventos.IO.Site.Models
+namespace Eventos.IO.Infra.CrossCutting.Identity.Models
 {
     public static class ClaimsPrincipalExtensions
     {
