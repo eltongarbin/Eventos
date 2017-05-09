@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Eventos.IO.Domain.Interfaces;
 using Eventos.IO.Infra.CrossCutting.Bus;
 using Eventos.IO.Infra.CrossCutting.IoC;
 using Eventos.IO.Site.Data;
@@ -47,12 +48,13 @@ namespace Eventos.IO.Site
 
             services.AddTransient<IEmailSender, AuthMessageSender>();
             services.AddTransient<ISmsSender, AuthMessageSender>();
+            services.AddScoped<IUser, AspNetUser>();
 
             RegisterServices(services);
         }
 
-        public void Configure(IApplicationBuilder app, 
-                              IHostingEnvironment env, 
+        public void Configure(IApplicationBuilder app,
+                              IHostingEnvironment env,
                               ILoggerFactory loggerFactory,
                               IHttpContextAccessor accessor)
         {
