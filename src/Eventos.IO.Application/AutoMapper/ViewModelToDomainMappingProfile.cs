@@ -2,6 +2,7 @@
 using Eventos.IO.Application.ViewModels;
 using Eventos.IO.Domain.Eventos.Commands;
 using Eventos.IO.Domain.Eventos.Events;
+using Eventos.IO.Domain.Organizadores.Commands;
 using System;
 
 namespace Eventos.IO.Application.AutoMapper
@@ -33,7 +34,7 @@ namespace Eventos.IO.Application.AutoMapper
                                                                                                  c.Id)));
 
             CreateMap<EnderecoViewModel, IncluirEnderecoEventoCommand>()
-                .ConstructUsing(c => new IncluirEnderecoEventoCommand(Guid.NewGuid(), 
+                .ConstructUsing(c => new IncluirEnderecoEventoCommand(Guid.NewGuid(),
                                                                       c.Logradouro,
                                                                       c.Numero,
                                                                       c.Complemento,
@@ -44,10 +45,10 @@ namespace Eventos.IO.Application.AutoMapper
                                                                       c.EventoId));
 
             CreateMap<EventoViewModel, AtualizarEventoCommand>()
-                .ConstructUsing(c => new AtualizarEventoCommand(c.Id, 
-                                                                c.Nome, 
-                                                                c.DescricaoCurta, 
-                                                                c.DescricaoLonga, 
+                .ConstructUsing(c => new AtualizarEventoCommand(c.Id,
+                                                                c.Nome,
+                                                                c.DescricaoCurta,
+                                                                c.DescricaoLonga,
                                                                 c.DataInicio,
                                                                 c.DataFim,
                                                                 c.Gratuito,
@@ -59,6 +60,9 @@ namespace Eventos.IO.Application.AutoMapper
 
             CreateMap<EventoViewModel, ExcluirEventoCommand>()
                 .ConstructUsing(c => new ExcluirEventoCommand(c.Id));
+
+            CreateMap<OrganizadorViewModel, RegistrarOrganizadorCommand>()
+                .ConstructUsing(c => new RegistrarOrganizadorCommand(c.Id, c.Nome, c.CPF, c.Email));
         }
     }
 }
