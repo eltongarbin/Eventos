@@ -22,13 +22,11 @@ namespace Eventos.IO.Application.ViewModels
         public string DescricaoLonga { get; set; }
 
         [Display(Name = "Início do Evento")]
-        [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
+        [Required(ErrorMessage = "A data é requerida")]
         public DateTime DataInicio { get; set; }
 
         [Display(Name = "Fim do Evento")]
-        [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
+        [Required(ErrorMessage = "A data é requerida")]
         public DateTime DataFim { get; set; }
 
         [Display(Name = "Será gratuito?")]
@@ -36,6 +34,7 @@ namespace Eventos.IO.Application.ViewModels
 
         [Display(Name = "Valor")]
         [DisplayFormat(DataFormatString = "{0:C}")]
+        [DataType(DataType.Currency, ErrorMessage = "Moeda em formato inválido")]
         public decimal Valor { get; set; }
 
         [Display(Name = "Será online?")]
