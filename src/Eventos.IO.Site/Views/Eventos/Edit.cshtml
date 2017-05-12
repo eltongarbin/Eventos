@@ -1,4 +1,5 @@
-@model Eventos.IO.Application.ViewModels.EventoViewModel
+@using Eventos.IO.Application.ViewModels
+@model EventoViewModel
 
 @{
     ViewData["Title"] = "Atualizar Evento";
@@ -52,7 +53,7 @@
         <div class="form-group">
             <label asp-for="DataInicio" class="col-md-2 control-label"></label>
             <div class="col-md-10">
-                <input asp-for="DataInicio" class="form-control" />
+                <input asp-for="DataInicio" type="text" asp-format="{0:dd/MM/yyyy}" class="form-control" />
                 <span asp-validation-for="DataInicio" class="text-danger"></span>
             </div>
         </div>
@@ -60,7 +61,7 @@
         <div class="form-group">
             <label asp-for="DataFim" class="col-md-2 control-label"></label>
             <div class="col-md-10">
-                <input asp-for="DataFim" class="form-control" />
+                <input asp-for="DataFim" type="text" asp-format="{0:dd/MM/yyyy}" class="form-control" />
                 <span asp-validation-for="DataFim" class="text-danger"></span>
             </div>
         </div>
@@ -101,14 +102,25 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+                <input type="submit" id="btSubmit" value="Atualizar Evento" class="btn btn-success" />
+                <a asp-action="Index" class="btn btn-info">Voltar para Lista</a>
             </div>
         </div>
     </div>
 </form>
 
-<div>
-    <a asp-action="Index">Back to List</a>
+<div id="EnderecoForm">
+    <div id="EnderecoTarget">
+        @Html.Partial("_DetalhesEndereco")
+    </div>
+</div>
+
+<div id="myModal" class="modal fade in">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div id="myModalContent"></div>
+        </div>
+    </div>
 </div>
 
 @section Scripts {
@@ -120,6 +132,7 @@
 
     <script>
         ValidacoesEvento();
+        AjaxModal();
     </script>
 
     @{ 
@@ -128,26 +141,25 @@
             var notificacao = ViewBag.RetornoPost.ToString().Split(',');
 
             <script>
-                toastr.options = {
-                    "closeButton": false,
-                    "debug": true,
-                    "newestOnTop": false,
-                    "progressBar": false,
-                    "positionClass": "toast-top-right",
-                    "preventDuplicates": true,
-                    "onclick": null,
-                    "showDuration": "300",
-                    "hideDuration": "1000",
-                    "timeOut": "5000",
-                    "extendedTimeOut": "1000",
-                    "showEasing": "swing",
-                    "hideEasing": "linear",
-                    "showMethod": "fadeIn",
-                    "hideMethod": "fadeOut"
-                }
-
                 toastr["@notificacao[0]"]("@notificacao[1]");
             </script>
+
+            if (@notificacao[0] == "success")
+            {
+                <script>
+                    toastr.options.onHidden = function () {
+                        window.location = "http://localhost:51930/eventos/meuseventos";
+                    };
+                    toastr.options.onclick = function () {
+                        window.location = "http://localhost:51930/eventos/meuseventos";
+                    };
+                    toastr.options.onCloseClick = function () {
+                        window.location = "http://localhost:51930/eventos/meuseventos";
+                    };
+
+                    $('#btSubmit').promise('disabled', true);
+                </script>
+            }
         }
     }
 }
