@@ -1,9 +1,9 @@
 ﻿using Eventos.IO.Domain.Core.Commands;
 using System;
 
-namespace Eventos.IO.Domain.Eventos.Events
+namespace Eventos.IO.Domain.Eventos.Commands
 {
-    public class IncluirEnderecoEventoCommand : Command
+    public class AtualizarEnderecoEventoCommand : Command
     {
         public Guid Id { get; private set; }
         public string Logradouro { get; private set; }
@@ -15,15 +15,15 @@ namespace Eventos.IO.Domain.Eventos.Events
         public string Estado { get; private set; }
         public Guid? EventoId { get; private set; }
 
-        public IncluirEnderecoEventoCommand(Guid id, 
-                                            string logradouro, 
-                                            string numero, 
-                                            string complemento, 
-                                            string bairro,
-                                            string cep,
-                                            string cidade,
-                                            string estado,
-                                            Guid? eventoId)
+        public AtualizarEnderecoEventoCommand(Guid id, 
+                                              string logradouro, 
+                                              string numero, 
+                                              string complemento, 
+                                              string bairro,
+                                              string cep,
+                                              string cidade,
+                                              string estado,
+                                              Guid? eventoId)
         {
             Id = id;
             Logradouro = logradouro;
