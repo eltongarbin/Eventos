@@ -9,7 +9,11 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 using System.Threading.Tasks;
+using Eventos.IO.Infra.CrossCutting.Identity.Authorization;
+using Microsoft.Extensions.Options;
 
 namespace Eventos.IO.Services.Api.Controllers
 {
@@ -19,19 +23,26 @@ namespace Eventos.IO.Services.Api.Controllers
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly ILogger _logger;
         private readonly IBus _bus;
+        private readonly JwtTokenOptions _jwtTokenOptions;
+
+        private static long ToUnixEpochDate(DateTime date) =>
+            (long)Math.Round((date.ToUniversalTime() - new DateTimeOffset(1970, 1, 1, 0, 0, 0, TimeSpan.Zero)).TotalSeconds);
 
         public AccountController(IDomainNotificationHandler<DomainNotification> notifications,
                                  IUser user,
                                  UserManager<ApplicationUser> userManager,
                                  SignInManager<ApplicationUser> signInManager,
                                  ILoggerFactory loggerFactory,
-                                 IBus bus)
+                                 IBus bus,
+                                 IOptions<JwtTokenOptions> jwtTokenOptions)
             : base(notifications, user, bus)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _bus = bus;
+            _jwtTokenOptions = jwtTokenOptions.Value;
 
+            ThrowIfInvalidOptions(_jwtTokenOptions);
             _logger = loggerFactory.CreateLogger<AccountController>();
         }
 
@@ -73,7 +84,12 @@ namespace Eventos.IO.Services.Api.Controllers
                 }
 
                 _logger.LogInformation(1, "Usuário criado com sucesso!");
-                return Response(model);
+                var response = GerarTokenUsuario(new LoginViewModel
+                {
+                    Email = model.Email,
+                    Password = model.Password
+                });
+                return Response(response);
             }
 
             AdicionarErrosIdentity(result);
@@ -95,11 +111,56 @@ namespace Eventos.IO.Services.Api.Controllers
             if (result.Succeeded)
             {
                 _logger.LogInformation(1, "Usuário logado com sucesso");
-                return Response(model);
+                var response = GerarTokenUsuario(model);
+                return Response(response);
             }
 
             NotificarErro(result.ToString(), "Falha ao realizar o login");
             return Response(model);
+        }
+
+        private async Task<object> GerarTokenUsuario(LoginViewModel login)
+        {
+            var user = await _userManager.FindByEmailAsync(login.Email);
+            var userClaims = await _userManager.GetClaimsAsync(user);
+
+            userClaims.Add(new Claim(JwtRegisteredClaimNames.Sub, user.Id));
+            userClaims.Add(new Claim(JwtRegisteredClaimNames.Email, user.Email));
+            userClaims.Add(new Claim(JwtRegisteredClaimNames.Jti, await _jwtTokenOptions.JtiGenerator()));
+            userClaims.Add(new Claim(JwtRegisteredClaimNames.Iat, ToUnixEpochDate(_jwtTokenOptions.IssuedAt).ToString(), ClaimValueTypes.Integer64));
+
+            var jwt = new JwtSecurityToken(_jwtTokenOptions.Issuer,
+                                           _jwtTokenOptions.Audience,
+                                           userClaims,
+                                           _jwtTokenOptions.NotBefore,
+                                           _jwtTokenOptions.Expiration,
+                                           _jwtTokenOptions.SigningCredentials);
+
+            var encodedJwt = new JwtSecurityTokenHandler().WriteToken(jwt);
+
+            var response = new
+            {
+                access_token = encodedJwt,
+                expires_in = (int)_jwtTokenOptions.ValidFor.TotalSeconds,
+                user = user
+            };
+
+            return response;
+        }
+
+        private static void ThrowIfInvalidOptions(JwtTokenOptions options)
+        {
+            if (options == null)
+                throw new ArgumentNullException(nameof(options));
+
+            if (options.ValidFor <= TimeSpan.Zero)
+                throw new ArgumentException("Must be a non-zero TimeSpan.", nameof(JwtTokenOptions.ValidFor));
+
+            if (options.SigningCredentials == null)
+                throw new ArgumentNullException(nameof(JwtTokenOptions.SigningCredentials));
+
+            if (options.JtiGenerator == null)
+                throw new ArgumentNullException(nameof(JwtTokenOptions.JtiGenerator));
         }
     }
 }
