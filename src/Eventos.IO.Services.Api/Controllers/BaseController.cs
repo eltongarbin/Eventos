@@ -1,10 +1,10 @@
+using Eventos.IO.Domain.Core.Bus;
 using Eventos.IO.Domain.Core.Notifications;
 using Eventos.IO.Domain.Interfaces;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Linq;
-using Eventos.IO.Domain.Core.Bus;
-using Microsoft.AspNetCore.Identity;
 
 namespace Eventos.IO.Services.Api.Controllers
 {
@@ -55,7 +55,8 @@ namespace Eventos.IO.Services.Api.Controllers
             var erros = ModelState.Values.SelectMany(v => v.Errors);
             foreach (var erro in erros)
             {
-                NotificarErro(string.Empty, erro.ErrorMessage);
+                var erroMsg = erro.Exception == null ? erro.ErrorMessage : erro.Exception.Message;
+                NotificarErro(string.Empty, erroMsg);
             }
         }
 

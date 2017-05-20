@@ -35,6 +35,11 @@ namespace Eventos.IO.Infra.Data.Repository
             Db.Enderecos.Update(endereco);
         }
 
+        public IEnumerable<Categoria> ObterCategorias()
+        {
+            return Db.Database.GetDbConnection().Query<Categoria>("SELECT * FROM Categorias");
+        }
+
         public Endereco ObterEnderecoPorId(Guid id)
         {
             var sql = @"SELECT * FROM Enderecos E
