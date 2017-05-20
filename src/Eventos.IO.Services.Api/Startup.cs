@@ -1,5 +1,7 @@
-﻿using System;
-using AutoMapper;
+﻿using AutoMapper;
+using Elmah.Io.AspNetCore;
+using Elmah.Io.Extensions.Logging;
+using Eventos.IO.Infra.CrossCutting.AspNetFilters;
 using Eventos.IO.Infra.CrossCutting.Bus;
 using Eventos.IO.Infra.CrossCutting.Identity.Authorization;
 using Eventos.IO.Infra.CrossCutting.Identity.Data;
@@ -22,6 +24,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Swashbuckle.AspNetCore.Swagger;
+using System;
 using System.Text;
 
 namespace Eventos.IO.Services.Api
@@ -48,7 +51,10 @@ namespace Eventos.IO.Services.Api
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddIdentity<ApplicationUser, IdentityRole>()
+            services.AddIdentity<ApplicationUser, IdentityRole>(options =>
+                {
+                    options.Cookies.ApplicationCookie.AutomaticChallenge = false;
+                })
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
@@ -65,6 +71,7 @@ namespace Eventos.IO.Services.Api
                     .Build();
 
                 options.Filters.Add(new AuthorizeFilter(policy));
+                options.Filters.Add(new ServiceFilterAttribute(typeof(GlobalActionLogger)));
             });
 
             services.AddAuthorization(options =>
@@ -94,7 +101,7 @@ namespace Eventos.IO.Services.Api
                     Contact = new Contact
                     {
                         Name = "Desenvolvedor X",
-                        Email = "email@eventos.io", 
+                        Email = "email@eventos.io",
                         Url = "http://eventos.io"
                     },
                     License = new License
@@ -108,13 +115,26 @@ namespace Eventos.IO.Services.Api
             RegisterServices(services);
         }
 
-        public void Configure(IApplicationBuilder app, 
-                              IHostingEnvironment env, 
+        public void Configure(IApplicationBuilder app,
+                              IHostingEnvironment env,
                               ILoggerFactory loggerFactory,
                               IHttpContextAccessor accessor)
         {
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
+            loggerFactory.AddElmahIo("31737484568c41429cccb10414b416fd", new Guid("357211f6-c783-4562-87ab-dec2a873958c"));
+
+            var elmahSts = new ElmahIoSettings
+            {
+                OnMessage = message =>
+                {
+                    message.Version = "v1.0";
+                    message.Application = "Eventos.IO";
+                    message.User = accessor.HttpContext.User.Identity.Name;
+                }
+            };
+
+            app.UseElmahIo("31737484568c41429cccb10414b416fd", new Guid("357211f6-c783-4562-87ab-dec2a873958c"), elmahSts);
 
             var jwtAppSettingOptions = Configuration.GetSection(nameof(JwtTokenOptions));
             var tokenValidationParameters = new TokenValidationParameters
@@ -162,7 +182,7 @@ namespace Eventos.IO.Services.Api
             InMemoryBus.ContainerAccessor = () => accessor.HttpContext.RequestServices;
         }
 
-        public static void RegisterServices(IServiceCollection services)
+        private static void RegisterServices(IServiceCollection services)
         {
             NativeInjectorBootStrapper.RegisterServices(services);
         }
