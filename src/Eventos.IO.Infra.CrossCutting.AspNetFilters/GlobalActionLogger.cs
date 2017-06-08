@@ -24,7 +24,7 @@ namespace Eventos.IO.Infra.CrossCutting.AspNetFilters
             _hostingEnvironment = hostingEnvironment;
         }
 
-        public void OnActionExecuted(ActionExecutedContext context)
+        public async void OnActionExecuted(ActionExecutedContext context)
         {
             if (_hostingEnvironment.IsDevelopment())
             {
@@ -63,7 +63,7 @@ namespace Eventos.IO.Infra.CrossCutting.AspNetFilters
                 };
 
                 var client = ElmahioAPI.Create("31737484568c41429cccb10414b416fd");
-                client.Messages.Create(new Guid("357211f6-c783-4562-87ab-dec2a873958c").ToString(), message);
+                await client.Messages.CreateAsync(new Guid("357211f6-c783-4562-87ab-dec2a873958c").ToString(), message);
             }
         }
 
