@@ -1,0 +1,10 @@
+/* You can add global styles to this file, and also import other style files */
+
+.main-container {
+   padding-right: 15px;
+   padding-left: 15px;
+   margin-right: auto;
+   margin-left: auto;
+   overflow:hidden;
+   min-height:350px !important;
+}
