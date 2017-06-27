@@ -1,0 +1,72 @@
+<app-menu-superior></app-menu-superior>
+<div class="container main-container">
+    <h4>Organize seu próprio Evento</h4>
+    <hr />
+    <form novalidate (ngSubmit)="adicionarOrganizador()" [formGroup]="inscricaoForm">
+        <div class="form-horizontal">
+            <div class="alert alert-danger" *ngIf="errors.length > 0">
+                <h3 id="msgRetorno">Opa! Alguma coisa não deu certo:</h3>
+                <ul>
+                    <li *ngFor="let error of errors">{{ error }}</li>
+                </ul>
+            </div>
+
+            <div class="form-group" [ngClass]="{'has-error': displayMessage.nome}">
+                <label for="nome" class="col-md-2 control-label">Nome Completo</label>
+                <div class="col-md-10">
+                    <input type="text" class="form-control" id="nome" placeholder="Nome (requerido)" formControlName="nome" />
+                    <span class="text-danger" *ngIf="displayMessage.nome">
+                        <p [innerHTML]="displayMessage.nome"></p>
+                    </span>
+                </div>
+            </div>
+
+            <div class="form-group" [ngClass]="{'has-error': displayMessage.cpf }">
+                <label class="col-md-2 control-label">CPF</label>
+                <div class="col-md-10">
+                    <input class="form-control" type="text" placeholder="CPF (requerido)" formControlName="cpf" />
+                    <span class="text-danger" *ngIf="displayMessage.cpf">
+                        <p [innerHTML]="displayMessage.cpf"></p>
+                    </span>
+                </div>
+            </div>
+
+            <div class="form-group" [ngClass]="{'has-error': displayMessage.email }">
+                <label class="col-md-2 control-label">E-mail</label>
+                <div class="col-md-10">
+                    <input class="form-control" type="text" placeholder="E-mail (requerido)" formControlName="email" />
+                    <span class="text-danger" *ngIf="displayMessage.email">
+                        <p [innerHTML]="displayMessage.email"></p>
+                    </span>
+                </div>
+            </div>
+
+            <div class="form-group" [ngClass]="{'has-error': displayMessage.password }">
+                <label class="col-md-2 control-label">Senha</label>
+                <div class="col-md-10">
+                    <input class="form-control" type="password" placeholder="Senha (requerido)" formControlName="password" />
+                    <span class="text-danger" *ngIf="displayMessage.password">
+                        <p [innerHTML]="displayMessage.password"></p>
+                    </span>
+                </div>
+            </div>
+
+            <div class="form-group" [ngClass]="{'has-error': displayMessage.confirmPassword }">
+                <label class="col-md-2 control-label">Confirme a Senha</label>
+                <div class="col-md-10">
+                    <input class="form-control" type="password" placeholder="Confirme a Senha (requerido)" formControlName="confirmPassword"
+                    />
+                    <span class="text-danger" *ngIf="displayMessage.confirmPassword">
+                        <p [innerHTML]="displayMessage.confirmPassword"></p>
+                    </span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-4 col-md-offset-2">
+                    <span><button class="btn btn-success" type="submit" [disabled]='!inscricaoForm.valid'>Registrar</button></span>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
