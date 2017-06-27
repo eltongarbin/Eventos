@@ -41,4 +41,16 @@ export class OrganizadorService {
 
         return response;
     }
+
+    logarOrganizador(organizador: Organizador): Observable<Organizador> {
+        let headers = new Headers({ 'Content-Type': 'application/json' });
+        let options = new RequestOptions({ headers });
+
+        let response = this.http
+            .post('http://localhost:50049/api/v1/conta', organizador, options)
+            .map(this.extractData)
+            .catch(this.serviceError);
+
+        return response;
+    }
 }

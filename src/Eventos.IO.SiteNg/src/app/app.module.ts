@@ -18,6 +18,7 @@ import { MenuLoginComponent } from './shared/menu-login/menu-login.component';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { InscricaoComponent } from './usuario/inscricao/inscricao.component';
+import { LoginComponent } from './usuario/login/login.component';
 
 // services
 import { OrganizadorService } from "./usuario/organizador.service";
@@ -33,7 +34,8 @@ import { rootRouterConfig } from './app.routes';
     MainPrincipalComponent,
     MenuLoginComponent,
     HomeComponent,
-    InscricaoComponent
+    InscricaoComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
