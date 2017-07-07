@@ -75,11 +75,10 @@ export class LoginComponent implements OnInit, AfterViewInit {
         if (this.loginForm.dirty && this.loginForm.valid) {
             let organizadorMapped = Object.assign({}, this.organizador, this.loginForm.value);
 
-            this.organizadorService.logarOrganizador(organizadorMapped)
-                .subscribe(
+            this.organizadorService.logarOrganizador(organizadorMapped).subscribe(
                 result => this.onSaveComplete(result),
                 error => { this.errors = JSON.parse(error._body).errors; }
-                );
+            );
         }
     }
 
@@ -90,6 +89,6 @@ export class LoginComponent implements OnInit, AfterViewInit {
         localStorage.setItem('eio.token', response.result.access_token);
         localStorage.setItem('eio.user', JSON.stringify(response.result.user));
 
-        this.router.navigate(['/home']);
+        this.router.navigate(['/proximos-eventos']);
     }
 }

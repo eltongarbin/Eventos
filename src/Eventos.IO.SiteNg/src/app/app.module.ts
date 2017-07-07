@@ -25,6 +25,7 @@ import { HomeComponent } from './home/home.component';
 import { InscricaoComponent } from './usuario/inscricao/inscricao.component';
 import { LoginComponent } from './usuario/login/login.component';
 import { AdicionarEventoComponent } from './eventos/adicionar-evento/adicionar-evento.component';
+import { ListaEventosComponent } from "./eventos/lista-eventos/lista-eventos.component";
 
 // services
 import { OrganizadorService } from "./usuario/organizador.service";
@@ -44,7 +45,8 @@ import { rootRouterConfig } from './app.routes';
     HomeComponent,
     InscricaoComponent,
     LoginComponent,
-    AdicionarEventoComponent
+    AdicionarEventoComponent,
+    ListaEventosComponent
   ],
   imports: [
     BrowserModule,

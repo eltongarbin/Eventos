@@ -10,6 +10,12 @@ import { ServiceBase } from "app/shared/service-base";
 export class EventoService extends ServiceBase {
     constructor(private http: Http) { super(); }
 
+    obterTodos(): Observable<Evento[]> {
+        return this.http.get(this.UrlServiceV1 + 'eventos')
+            .map((res: Response) => <Evento[]>res.json())
+            .catch(super.serviceError);
+    }
+
     obterCategorias(): Observable<Categoria[]> {
         return this.http.get(this.UrlServiceV1 + 'eventos/categorias')
             .map((res: Response) => <Categoria[]>res.json())

@@ -2,7 +2,7 @@
     <li *ngSwitchCase="false"><a [routerLink]="['/inscricao']">Registre-se</a></li>
     <li *ngSwitchCase="false"><a [routerLink]="['/entrar']">Entrar</a></li>
 
-    <li *ngSwitchCase="true"><a href="#">Olá {{ nome }}</a></li>
+    <li *ngSwitchCase="true"><a>Olá {{ nome }}</a></li>
     <li *ngSwitchCase="true">
         <a href="#" (click)="logout()"><span class="glyphicon glyphicon-off"></span> Sair</a>
     </li>

@@ -53,7 +53,7 @@ export class AdicionarEventoComponent implements OnInit {
             categoriaId: {
                 required: 'Informe a categoria'
             }
-        }
+        };
 
         this.genericValidator = new GenericValidator(this.validationMessages);
         this.evento = new Evento();
@@ -139,7 +139,7 @@ export class AdicionarEventoComponent implements OnInit {
             .then((toast: Toast) => {
                 setTimeout(() => {
                     this.toastr.dismissToast(toast);
-                    this.router.navigate(['/home']);
+                    this.router.navigateByUrl('/proximos-eventos');
                 }, 2500);
             });
     }
