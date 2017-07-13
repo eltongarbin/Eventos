@@ -12,6 +12,7 @@
         <div class="collapse navbar-collapse" id="navbar" [collapse]="isCollapsed">
             <ul class="nav navbar-nav">
                 <li><a [routerLink]="['/proximos-eventos']">Eventos</a></li>
+                <li *ngIf="usuarioLogado()"><a [routerLink]="['/meus-eventos']">Meus Eventos</a></li>
             </ul>
             <app-menu-login></app-menu-login>
         </div>
