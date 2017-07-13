@@ -58,6 +58,14 @@ namespace Eventos.IO.Services.Api.Controllers
             return _mapper.Map<IEnumerable<CategoriaViewModel>>(_eventoRepository.ObterCategorias());
         }
 
+        [HttpGet]
+        [Authorize(Policy = "PodeLerEventos")]
+        [Route("eventos/meus-eventos")]
+        public IEnumerable<EventoViewModel> ObterMeusEventos()
+        {
+            return _mapper.Map<IEnumerable<EventoViewModel>>(_eventoRepository.ObterEventoPorOrganizador(OrganizadorId));
+        }
+
         [HttpPost]
         [Authorize(Policy = "PodeGravar")]
         [Route("eventos")]
