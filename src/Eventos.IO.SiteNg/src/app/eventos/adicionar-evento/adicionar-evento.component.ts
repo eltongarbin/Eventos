@@ -1,4 +1,4 @@
-import { Component, ViewChildren, ElementRef, OnInit, ViewContainerRef } from '@angular/core';
+import { Component, ViewChildren, ElementRef, OnInit, ViewContainerRef, AfterViewInit } from '@angular/core';
 import { FormControlName, FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
 
@@ -19,7 +19,7 @@ import { ToastsManager, Toast } from 'ng2-toastr/ng2-toastr';
     templateUrl: './adicionar-evento.component.html',
     styleUrls: ['./adicionar-evento.component.css']
 })
-export class AdicionarEventoComponent implements OnInit {
+export class AdicionarEventoComponent implements OnInit, AfterViewInit {
     @ViewChildren(FormControlName, { read: ElementRef }) formInputElements: ElementRef[];
 
     public errors: any[] = [];

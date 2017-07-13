@@ -5,8 +5,8 @@
     <div class="row">
         <div class="col-md-12">
             <div class="pull-left">
-                <a class="btn btn-primary">
-                    <span class="glyphicon glyphicon-plus-sign"></span> Novo Evento
+        <a class="btn btn-primary" [routerLink]="['/novo-evento']">
+          <span title="Novo Evento" class="glyphicon glyphicon-plus-sign"></span> Novo Evento
                 </a>
             </div>
         </div>
@@ -39,7 +39,7 @@
                         
                         <td [ngSwitch]="evento.online">
                             <span *ngSwitchCase="true" class="glyphicon glyphicon-ok"></span>
-                            <span *ngSwitchCase="false" class="glyphicon glyphicon-ok"></span>
+              <span *ngSwitchCase="false" class="glyphicon glyphicon-unchecked"></span>
                         </td>
 
                         <td>
