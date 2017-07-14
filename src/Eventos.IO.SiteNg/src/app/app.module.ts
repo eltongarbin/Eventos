@@ -27,11 +27,13 @@ import { LoginComponent } from './usuario/login/login.component';
 import { AdicionarEventoComponent } from './eventos/adicionar-evento/adicionar-evento.component';
 import { ListaEventosComponent } from "./eventos/lista-eventos/lista-eventos.component";
 import { MeusEventosComponent } from "./eventos/meus-eventos/meus-eventos.component";
+import { AcessoNegadoComponent } from "./shared/acesso-negado/acesso-negado.component";
 
 // services
 import { OrganizadorService } from "./usuario/organizador.service";
 import { EventoService } from "./eventos/evento.service";
 import { ToastrCustomOption } from "./utils/ToastrCustomOption";
+import { AuthService } from "./shared/auth-service";
 
 // others
 import { rootRouterConfig } from './app.routes';
@@ -48,7 +50,8 @@ import { rootRouterConfig } from './app.routes';
     LoginComponent,
     AdicionarEventoComponent,
     ListaEventosComponent,
-    MeusEventosComponent
+    MeusEventosComponent,
+    AcessoNegadoComponent
   ],
   imports: [
     BrowserModule,
@@ -64,6 +67,7 @@ import { rootRouterConfig } from './app.routes';
   providers: [
     OrganizadorService,
     EventoService,
+    AuthService,
     { provide: ToastOptions, useClass: ToastrCustomOption }
   ],
   bootstrap: [AppComponent]
