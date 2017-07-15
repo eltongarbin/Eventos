@@ -22,9 +22,9 @@ namespace Eventos.IO.Infra.Data.Mappings
                 .HasMaxLength(11)
                 .IsRequired();
 
-            builder.Ignore(c => c.ValidationResult);
+            builder.Ignore(e => e.ValidationResult);
 
-            builder.Ignore(c => c.CascadeMode);
+            builder.Ignore(e => e.CascadeMode);
 
             builder.ToTable("Organizadores");
         }

@@ -10,8 +10,7 @@ namespace Eventos.IO.Domain.Core.Notifications
         public string Value { get; private set; }
         public int Version { get; private set; }
 
-        public DomainNotification(string key,
-                                  string value)
+        public DomainNotification(string key, string value)
         {
             DomainNotificationId = Guid.NewGuid();
             Key = key;

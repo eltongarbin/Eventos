@@ -36,7 +36,7 @@ namespace Eventos.IO.Infra.CrossCutting.AspNetFilters
                     Hostname = context.HttpContext.Request.Host.ToString(),
                     AreaAccessed = context.HttpContext.Request.GetDisplayUrl(),
                     Action = context.ActionDescriptor.DisplayName,
-                    TimesStamp = DateTime.Now
+                    TimeStamp = DateTime.Now
                 };
 
                 _logger.LogInformation(1, data.ToString(), "Log de Auditoria");

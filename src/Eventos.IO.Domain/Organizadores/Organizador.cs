@@ -21,7 +21,8 @@ namespace Eventos.IO.Domain.Organizadores
             Email = email;
         }
 
-        public Organizador() { }
+        // EF Construtor
+        protected Organizador() { }
 
         public override bool EhValido()
         {

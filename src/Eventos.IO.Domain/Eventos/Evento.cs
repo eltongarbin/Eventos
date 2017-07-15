@@ -112,7 +112,7 @@ namespace Eventos.IO.Domain.Eventos
         private void ValidarData()
         {
             RuleFor(c => c.DataInicio)
-                .LessThan(c => DataFim)
+                .LessThan(c => c.DataFim)
                 .WithMessage("A data de início deve ser maior que a data do final do evento");
 
             RuleFor(c => c.DataInicio)
@@ -138,7 +138,7 @@ namespace Eventos.IO.Domain.Eventos
 
         private void ValidarNomeEmpresa()
         {
-            RuleFor(c => NomeEmpresa)
+            RuleFor(c => c.NomeEmpresa)
                 .NotEmpty().WithMessage("O nome do organizador precisa ser fornecido")
                 .Length(2, 150).WithMessage("O nome do organizador precisa ter entre 2 e 150 caracteres");
         }

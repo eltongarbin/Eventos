@@ -22,7 +22,7 @@ namespace Eventos.IO.Application.ViewModels
                 new EstadoViewModel() {UF = "GO", Nome = "Goiás"},
                 new EstadoViewModel() {UF = "MA", Nome = "Maranhão"},
                 new EstadoViewModel() {UF = "MT", Nome = "Mato Grosso"},
-                new EstadoViewModel() {UF = "MS", Nome = "Mato Grosso Sul"},
+                new EstadoViewModel() {UF = "MS", Nome = "Mato Grosso do Sul"},
                 new EstadoViewModel() {UF = "MG", Nome = "Minas Gerais"},
                 new EstadoViewModel() {UF = "PA", Nome = "Pará"},
                 new EstadoViewModel() {UF = "PB", Nome = "Paraíba"},

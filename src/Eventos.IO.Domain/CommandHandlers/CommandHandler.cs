@@ -12,7 +12,7 @@ namespace Eventos.IO.Domain.CommandHandlers
         private readonly IBus _bus;
         private readonly IDomainNotificationHandler<DomainNotification> _notifications;
 
-        public CommandHandler(IUnitOfWork uow, IBus bus, IDomainNotificationHandler<DomainNotification> notifications)
+        protected CommandHandler(IUnitOfWork uow, IBus bus, IDomainNotificationHandler<DomainNotification> notifications)
         {
             _uow = uow;
             _bus = bus;

@@ -88,7 +88,7 @@ namespace Eventos.IO.Domain.Eventos.Commands
 
             if (eventoAtual.OrganizadorId != _user.GetUserId())
             {
-                _bus.RaiseEvent(new DomainNotification(message.MessageType, "Evento não pertence ao Organizador"));
+                _bus.RaiseEvent(new DomainNotification(message.MessageType, "Evento não pertencente ao Organizador"));
                 return;
             }
 
@@ -140,7 +140,7 @@ namespace Eventos.IO.Domain.Eventos.Commands
             var eventoAtual = _eventoRepository.ObterPorId(message.Id);
             if (eventoAtual.OrganizadorId != _user.GetUserId())
             {
-                _bus.RaiseEvent(new DomainNotification(message.MessageType, "Evento não pertence ao Organizador"));
+                _bus.RaiseEvent(new DomainNotification(message.MessageType, "Evento não pertencente ao Organizador"));
                 return;
             }
             // TODO: Validações de negócio
