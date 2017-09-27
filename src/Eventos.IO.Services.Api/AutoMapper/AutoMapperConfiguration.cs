@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 
-namespace Eventos.IO.Application.AutoMapper
+namespace Eventos.IO.Services.Api.AutoMapper
 {
     public class AutoMapperConfiguration
     {

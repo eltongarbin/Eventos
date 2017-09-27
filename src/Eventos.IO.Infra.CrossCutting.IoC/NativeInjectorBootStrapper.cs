@@ -1,7 +1,4 @@
-﻿using AutoMapper;
-using Eventos.IO.Application.Interfaces;
-using Eventos.IO.Application.Services;
-using Eventos.IO.Domain.Core.Bus;
+﻿using Eventos.IO.Domain.Core.Bus;
 using Eventos.IO.Domain.Core.Events;
 using Eventos.IO.Domain.Core.Notifications;
 using Eventos.IO.Domain.Eventos.Commands;
@@ -31,13 +28,6 @@ namespace Eventos.IO.Infra.CrossCutting.IoC
         {
             // ASPNET
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-
-            #region Application
-            services.AddSingleton(Mapper.Configuration);
-            services.AddScoped<IMapper>(sp => new Mapper(sp.GetRequiredService<IConfigurationProvider>(), sp.GetService));
-            services.AddScoped<IEventoAppService, EventoAppService>();
-            services.AddScoped<IOrganizadorAppService, OrganizadorAppService>();
-            #endregion
 
             #region Domain
             // Commands

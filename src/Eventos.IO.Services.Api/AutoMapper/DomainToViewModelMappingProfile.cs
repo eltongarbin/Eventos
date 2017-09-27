@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
-using Eventos.IO.Application.ViewModels;
+using Eventos.IO.Services.Api.ViewModels;
 using Eventos.IO.Domain.Eventos;
 using Eventos.IO.Domain.Organizadores;
 
-namespace Eventos.IO.Application.AutoMapper
+namespace Eventos.IO.Services.Api.AutoMapper
 {
     public class DomainToViewModelMappingProfile : Profile
     {

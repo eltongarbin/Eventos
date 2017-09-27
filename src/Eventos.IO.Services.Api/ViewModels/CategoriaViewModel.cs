@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Eventos.IO.Application.ViewModels
+namespace Eventos.IO.Services.Api.ViewModels
 {
     public class CategoriaViewModel
     {

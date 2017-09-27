@@ -1,11 +1,10 @@
 ﻿using AutoMapper;
-using Eventos.IO.Application.Interfaces;
-using Eventos.IO.Application.ViewModels;
 using Eventos.IO.Domain.Core.Bus;
 using Eventos.IO.Domain.Core.Notifications;
 using Eventos.IO.Domain.Eventos.Commands;
 using Eventos.IO.Domain.Eventos.Repository;
 using Eventos.IO.Domain.Interfaces;
+using Eventos.IO.Services.Api.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -15,7 +14,6 @@ namespace Eventos.IO.Services.Api.Controllers
 {
     public class EventosController : BaseController
     {
-        private readonly IEventoAppService _eventoAppService;
         private readonly IBus _bus;
         private readonly IEventoRepository _eventoRepository;
         private readonly IMapper _mapper;
@@ -23,12 +21,10 @@ namespace Eventos.IO.Services.Api.Controllers
         public EventosController(IDomainNotificationHandler<DomainNotification> notifications,
                                  IUser user,
                                  IBus bus,
-                                 IEventoAppService eventoAppService,
                                  IEventoRepository eventoRepository,
                                  IMapper mapper)
             : base(notifications, user, bus)
         {
-            _eventoAppService = eventoAppService;
             _eventoRepository = eventoRepository;
             _mapper = mapper;
             _bus = bus;
@@ -39,7 +35,7 @@ namespace Eventos.IO.Services.Api.Controllers
         [Route("eventos")]
         public IEnumerable<EventoViewModel> Get()
         {
-            return _eventoAppService.ObterTodos();
+            return _mapper.Map<IEnumerable<EventoViewModel>>(_eventoRepository.ObterTodos());
         }
 
         [HttpGet]
@@ -47,7 +43,7 @@ namespace Eventos.IO.Services.Api.Controllers
         [Route("eventos/{id:guid}")]
         public EventoViewModel Get(Guid id, int version)
         {
-            return _eventoAppService.ObterPorId(id);
+            return _mapper.Map<EventoViewModel>(_eventoRepository.ObterPorId(id));
         }
 
         [HttpGet]
@@ -94,7 +90,9 @@ namespace Eventos.IO.Services.Api.Controllers
                 return Response();
             }
 
-            _eventoAppService.Atualizar(eventoViewModel);
+            var atualizarEventoCommand = _mapper.Map<AtualizarEventoCommand>(eventoViewModel);
+            _bus.SendCommand(atualizarEventoCommand);
+
             return Response(eventoViewModel);
         }
 
@@ -103,7 +101,8 @@ namespace Eventos.IO.Services.Api.Controllers
         [Route("eventos/{id:guid}")]
         public IActionResult Delete(Guid id)
         {
-            _eventoAppService.Excluir(id);
+            _bus.SendCommand(new ExcluirEventoCommand(id));
+
             return Response();
         }
     }

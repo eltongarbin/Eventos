@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace Eventos.IO.Application.ViewModels
+namespace Eventos.IO.Services.Api.ViewModels
 {
     public class OrganizadorViewModel
     {
