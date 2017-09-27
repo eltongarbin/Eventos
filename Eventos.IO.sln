@@ -1,41 +1,37 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26430.6
+VisualStudioVersion = 15.0.26730.16
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4 - Domain", "4 - Domain", "{6FFF3178-93F2-45FB-B804-E006CA8C78B0}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3 - Domain", "3 - Domain", "{6FFF3178-93F2-45FB-B804-E006CA8C78B0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Eventos.IO.Domain", "src\Eventos.IO.Domain\Eventos.IO.Domain.csproj", "{4EAF31AE-349C-46E7-88C0-A4C151043D6D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Eventos.IO.Domain", "src\Eventos.IO.Domain\Eventos.IO.Domain.csproj", "{4EAF31AE-349C-46E7-88C0-A4C151043D6D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Eventos.IO.Domain.Core", "src\Eventos.IO.Domain.Core\Eventos.IO.Domain.Core.csproj", "{760940DE-C01E-4CE8-BC89-81BF25CF16E3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Eventos.IO.Domain.Core", "src\Eventos.IO.Domain.Core\Eventos.IO.Domain.Core.csproj", "{760940DE-C01E-4CE8-BC89-81BF25CF16E3}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "5 - Infra", "5 - Infra", "{CAA0F25B-65D8-432A-B35D-57996F65878E}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4 - Infra", "4 - Infra", "{CAA0F25B-65D8-432A-B35D-57996F65878E}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "5.1 - Data", "5.1 - Data", "{1008CCDD-9DD1-4552-8148-9A480DBEC53E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Eventos.IO.Infra.Data", "src\Eventos.IO.Infra.Data\Eventos.IO.Infra.Data.csproj", "{E2E79FD4-F561-47E9-8AD4-624A2484021E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Eventos.IO.Infra.Data", "src\Eventos.IO.Infra.Data\Eventos.IO.Infra.Data.csproj", "{E2E79FD4-F561-47E9-8AD4-624A2484021E}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1 - Presentation", "1 - Presentation", "{3523DFB9-3CDC-4357-9BB6-41A95EA56A7F}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2 - Application", "2 - Application", "{62073452-F6DB-422B-9A2F-DFDA47074F54}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Eventos.IO.Site", "src\Eventos.IO.Site\Eventos.IO.Site.csproj", "{3415E889-4483-455D-AA72-35648D4E7592}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3 - Application", "3 - Application", "{62073452-F6DB-422B-9A2F-DFDA47074F54}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Eventos.IO.Application", "src\Eventos.IO.Application\Eventos.IO.Application.csproj", "{A80BAFAD-765B-41DC-8CD3-F4CEDC740662}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Eventos.IO.Application", "src\Eventos.IO.Application\Eventos.IO.Application.csproj", "{A80BAFAD-765B-41DC-8CD3-F4CEDC740662}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "5.2 - CrossCutting", "5.2 - CrossCutting", "{D40154D2-580D-4B1D-A3F4-12E6D21116D3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Eventos.IO.Infra.CrossCutting.IoC", "src\Eventos.IO.Infra.CrossCutting.IoC\Eventos.IO.Infra.CrossCutting.IoC.csproj", "{21F18FE5-9305-4F2E-B311-10E6212C44AA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Eventos.IO.Infra.CrossCutting.IoC", "src\Eventos.IO.Infra.CrossCutting.IoC\Eventos.IO.Infra.CrossCutting.IoC.csproj", "{21F18FE5-9305-4F2E-B311-10E6212C44AA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Eventos.IO.Infra.CrossCutting.Bus", "src\Eventos.IO.Infra.CrossCutting.Bus\Eventos.IO.Infra.CrossCutting.Bus.csproj", "{E7E0A60C-978E-409F-8B1F-9532F2487469}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Eventos.IO.Infra.CrossCutting.Bus", "src\Eventos.IO.Infra.CrossCutting.Bus\Eventos.IO.Infra.CrossCutting.Bus.csproj", "{E7E0A60C-978E-409F-8B1F-9532F2487469}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Eventos.IO.Infra.CrossCutting.Identity", "src\Eventos.IO.Infra.CrossCutting.Identity\Eventos.IO.Infra.CrossCutting.Identity.csproj", "{41BBE132-5753-4438-AE4B-C75E4FDE904E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Eventos.IO.Infra.CrossCutting.Identity", "src\Eventos.IO.Infra.CrossCutting.Identity\Eventos.IO.Infra.CrossCutting.Identity.csproj", "{41BBE132-5753-4438-AE4B-C75E4FDE904E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Eventos.IO.Infra.CrossCutting.AspNetFilters", "src\Eventos.IO.Infra.CrossCutting.AspNetFilters\Eventos.IO.Infra.CrossCutting.AspNetFilters.csproj", "{639E759A-D7E2-4DD2-85F8-901BB8674DDD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Eventos.IO.Infra.CrossCutting.AspNetFilters", "src\Eventos.IO.Infra.CrossCutting.AspNetFilters\Eventos.IO.Infra.CrossCutting.AspNetFilters.csproj", "{639E759A-D7E2-4DD2-85F8-901BB8674DDD}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2 - Services", "2 - Services", "{39037D4D-23FC-4F25-A71D-0E3C2C3D4C28}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1 - Services", "1 - Services", "{39037D4D-23FC-4F25-A71D-0E3C2C3D4C28}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Eventos.IO.Services.Api", "src\Eventos.IO.Services.Api\Eventos.IO.Services.Api.csproj", "{DCE53574-3434-4E81-A7F2-A871E0B0AFF7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Eventos.IO.Services.Api", "src\Eventos.IO.Services.Api\Eventos.IO.Services.Api.csproj", "{DCE53574-3434-4E81-A7F2-A871E0B0AFF7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -55,10 +51,6 @@ Global
 		{E2E79FD4-F561-47E9-8AD4-624A2484021E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E2E79FD4-F561-47E9-8AD4-624A2484021E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E2E79FD4-F561-47E9-8AD4-624A2484021E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3415E889-4483-455D-AA72-35648D4E7592}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3415E889-4483-455D-AA72-35648D4E7592}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3415E889-4483-455D-AA72-35648D4E7592}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3415E889-4483-455D-AA72-35648D4E7592}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A80BAFAD-765B-41DC-8CD3-F4CEDC740662}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A80BAFAD-765B-41DC-8CD3-F4CEDC740662}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A80BAFAD-765B-41DC-8CD3-F4CEDC740662}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -92,7 +84,6 @@ Global
 		{760940DE-C01E-4CE8-BC89-81BF25CF16E3} = {6FFF3178-93F2-45FB-B804-E006CA8C78B0}
 		{1008CCDD-9DD1-4552-8148-9A480DBEC53E} = {CAA0F25B-65D8-432A-B35D-57996F65878E}
 		{E2E79FD4-F561-47E9-8AD4-624A2484021E} = {1008CCDD-9DD1-4552-8148-9A480DBEC53E}
-		{3415E889-4483-455D-AA72-35648D4E7592} = {3523DFB9-3CDC-4357-9BB6-41A95EA56A7F}
 		{A80BAFAD-765B-41DC-8CD3-F4CEDC740662} = {62073452-F6DB-422B-9A2F-DFDA47074F54}
 		{D40154D2-580D-4B1D-A3F4-12E6D21116D3} = {CAA0F25B-65D8-432A-B35D-57996F65878E}
 		{21F18FE5-9305-4F2E-B311-10E6212C44AA} = {D40154D2-580D-4B1D-A3F4-12E6D21116D3}
@@ -100,5 +91,8 @@ Global
 		{41BBE132-5753-4438-AE4B-C75E4FDE904E} = {D40154D2-580D-4B1D-A3F4-12E6D21116D3}
 		{639E759A-D7E2-4DD2-85F8-901BB8674DDD} = {D40154D2-580D-4B1D-A3F4-12E6D21116D3}
 		{DCE53574-3434-4E81-A7F2-A871E0B0AFF7} = {39037D4D-23FC-4F25-A71D-0E3C2C3D4C28}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {EE92FAEC-3898-4871-9319-06D60705575C}
 	EndGlobalSection
 EndGlobal

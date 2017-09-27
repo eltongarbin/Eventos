@@ -8,7 +8,6 @@ using Eventos.IO.Infra.CrossCutting.Identity.Models;
 using Eventos.IO.Infra.CrossCutting.Identity.Models.AccountViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -76,8 +75,8 @@ namespace Eventos.IO.Services.Api.Controllers
                 UserName = model.Email,
                 Email = model.Email
             };
-            user.Claims.Add(new IdentityUserClaim<string> { ClaimType = "Eventos", ClaimValue = "Ler" });
-            user.Claims.Add(new IdentityUserClaim<string> { ClaimType = "Eventos", ClaimValue = "Gravar" });
+            // user.Claims.Add(new IdentityUserClaim<string> { ClaimType = "Eventos", ClaimValue = "Ler" });
+            // user.Claims.Add(new IdentityUserClaim<string> { ClaimType = "Eventos", ClaimValue = "Gravar" });
 
             var result = await _userManager.CreateAsync(user, model.Password);
             if (result.Succeeded)

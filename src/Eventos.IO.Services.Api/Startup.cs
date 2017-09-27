@@ -14,7 +14,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.AspNetCore.Mvc.Formatters;
@@ -51,10 +51,11 @@ namespace Eventos.IO.Services.Api
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddIdentity<ApplicationUser, IdentityRole>(options =>
-                {
-                    options.Cookies.ApplicationCookie.AutomaticChallenge = false;
-                })
+            //services.AddIdentity<ApplicationUser, IdentityRole>(options =>
+            //{
+            //    options.Cookies.ApplicationCookie.AutomaticChallenge = false;
+            //})
+            services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
@@ -74,18 +75,39 @@ namespace Eventos.IO.Services.Api
                 options.Filters.Add(new ServiceFilterAttribute(typeof(GlobalActionLogger)));
             });
 
-            services.AddAuthorization(options =>
-            {
-                options.AddPolicy("PodeLerEventos", policy => policy.RequireClaim("Eventos", "Ler"));
-                options.AddPolicy("PodeGravar", policy => policy.RequireClaim("Eventos", "Gravar"));
-            });
-
             var jwtAppSettingOptions = Configuration.GetSection(nameof(JwtTokenOptions));
             services.Configure<JwtTokenOptions>(options =>
             {
                 options.Issuer = jwtAppSettingOptions[nameof(JwtTokenOptions.Issuer)];
                 options.Audience = jwtAppSettingOptions[nameof(JwtTokenOptions.Audience)];
                 options.SigningCredentials = new SigningCredentials(_signingKey, SecurityAlgorithms.HmacSha256);
+            });
+
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(jwt =>
+                {
+                    jwt.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuer = true,
+                        ValidIssuer = jwtAppSettingOptions[nameof(JwtTokenOptions.Issuer)],
+
+                        ValidateAudience = true,
+                        ValidAudience = jwtAppSettingOptions[nameof(JwtTokenOptions.Audience)],
+
+                        ValidateIssuerSigningKey = true,
+                        IssuerSigningKey = _signingKey,
+
+                        RequireExpirationTime = true,
+                        ValidateLifetime = true,
+
+                        ClockSkew = TimeSpan.Zero
+                    };
+                });
+
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("PodeLerEventos", policy => policy.RequireClaim("Eventos", "Ler"));
+                options.AddPolicy("PodeGravar", policy => policy.RequireClaim("Eventos", "Gravar"));
             });
 
             services.AddAutoMapper();
@@ -136,31 +158,6 @@ namespace Eventos.IO.Services.Api
 
             app.UseElmahIo("31737484568c41429cccb10414b416fd", new Guid("357211f6-c783-4562-87ab-dec2a873958c"), elmahSts);
 
-            var jwtAppSettingOptions = Configuration.GetSection(nameof(JwtTokenOptions));
-            var tokenValidationParameters = new TokenValidationParameters
-            {
-                ValidateIssuer = true,
-                ValidIssuer = jwtAppSettingOptions[nameof(JwtTokenOptions.Issuer)],
-
-                ValidateAudience = true,
-                ValidAudience = jwtAppSettingOptions[nameof(JwtTokenOptions.Audience)],
-
-                ValidateIssuerSigningKey = true,
-                IssuerSigningKey = _signingKey,
-
-                RequireExpirationTime = true,
-                ValidateLifetime = true,
-
-                ClockSkew = TimeSpan.Zero
-            };
-
-            app.UseJwtBearerAuthentication(new JwtBearerOptions
-            {
-                AutomaticAuthenticate = true,
-                AutomaticChallenge = true,
-                TokenValidationParameters = tokenValidationParameters
-            });
-
             app.UseCors(c =>
             {
                 c.AllowAnyHeader();
@@ -169,7 +166,7 @@ namespace Eventos.IO.Services.Api
             });
 
             app.UseStaticFiles();
-            app.UseIdentity();
+            app.UseAuthentication();
             app.UseMvc();
 
             if (env.IsProduction())
