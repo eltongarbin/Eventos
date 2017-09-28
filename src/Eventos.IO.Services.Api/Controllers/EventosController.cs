@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
-using Eventos.IO.Domain.Core.Bus;
 using Eventos.IO.Domain.Core.Notifications;
 using Eventos.IO.Domain.Eventos.Commands;
 using Eventos.IO.Domain.Eventos.Repository;
 using Eventos.IO.Domain.Interfaces;
 using Eventos.IO.Services.Api.ViewModels;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -14,20 +14,20 @@ namespace Eventos.IO.Services.Api.Controllers
 {
     public class EventosController : BaseController
     {
-        private readonly IBus _bus;
+        private readonly IMediatorHandler _mediator;
         private readonly IEventoRepository _eventoRepository;
         private readonly IMapper _mapper;
 
-        public EventosController(IDomainNotificationHandler<DomainNotification> notifications,
+        public EventosController(INotificationHandler<DomainNotification> notifications,
                                  IUser user,
-                                 IBus bus,
+                                 IMediatorHandler mediator,
                                  IEventoRepository eventoRepository,
                                  IMapper mapper)
-            : base(notifications, user, bus)
+            : base(notifications, user, mediator)
         {
             _eventoRepository = eventoRepository;
             _mapper = mapper;
-            _bus = bus;
+            _mediator = mediator;
         }
 
         [HttpGet]
@@ -74,7 +74,7 @@ namespace Eventos.IO.Services.Api.Controllers
             }
 
             var eventoCommand = _mapper.Map<RegistrarEventoCommand>(eventoViewModel);
-            _bus.SendCommand(eventoCommand);
+            _mediator.EnviarComando(eventoCommand);
 
             return Response(eventoCommand);
         }
@@ -91,7 +91,7 @@ namespace Eventos.IO.Services.Api.Controllers
             }
 
             var atualizarEventoCommand = _mapper.Map<AtualizarEventoCommand>(eventoViewModel);
-            _bus.SendCommand(atualizarEventoCommand);
+            _mediator.EnviarComando(atualizarEventoCommand);
 
             return Response(eventoViewModel);
         }
@@ -101,7 +101,7 @@ namespace Eventos.IO.Services.Api.Controllers
         [Route("eventos/{id:guid}")]
         public IActionResult Delete(Guid id)
         {
-            _bus.SendCommand(new ExcluirEventoCommand(id));
+            _mediator.EnviarComando(new ExcluirEventoCommand(id));
 
             return Response();
         }

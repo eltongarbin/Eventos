@@ -2,13 +2,13 @@
 using Elmah.Io.AspNetCore;
 using Elmah.Io.Extensions.Logging;
 using Eventos.IO.Infra.CrossCutting.AspNetFilters;
-using Eventos.IO.Infra.CrossCutting.Bus;
 using Eventos.IO.Infra.CrossCutting.Identity.Authorization;
 using Eventos.IO.Infra.CrossCutting.Identity.Data;
 using Eventos.IO.Infra.CrossCutting.Identity.Models;
 using Eventos.IO.Infra.CrossCutting.IoC;
 using Eventos.IO.Services.Api.Configurations;
 using Eventos.IO.Services.Api.Middlewares;
+using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
@@ -134,6 +134,8 @@ namespace Eventos.IO.Services.Api
                 });
             });
 
+            services.AddMediatR(typeof(Startup));
+
             RegisterServices(services);
         }
 
@@ -177,8 +179,6 @@ namespace Eventos.IO.Services.Api
             {
                 s.SwaggerEndpoint("/swagger/v1/swagger.json", "Eventos.IO API v1.0");
             });
-
-            InMemoryBus.ContainerAccessor = () => accessor.HttpContext.RequestServices;
         }
 
         private static void RegisterServices(IServiceCollection services)

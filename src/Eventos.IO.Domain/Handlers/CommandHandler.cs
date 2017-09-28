@@ -1,29 +1,31 @@
-﻿using Eventos.IO.Domain.Core.Bus;
-using Eventos.IO.Domain.Core.Notifications;
+﻿using Eventos.IO.Domain.Core.Notifications;
 using Eventos.IO.Domain.Interfaces;
 using FluentValidation.Results;
+using MediatR;
 using System;
 
-namespace Eventos.IO.Domain.CommandHandlers
+namespace Eventos.IO.Domain.Handlers
 {
     public abstract class CommandHandler
     {
         private readonly IUnitOfWork _uow;
-        private readonly IBus _bus;
-        private readonly IDomainNotificationHandler<DomainNotification> _notifications;
+        private readonly IMediatorHandler _mediator;
+        private readonly DomainNotificationHandler _notifications;
 
-        protected CommandHandler(IUnitOfWork uow, IBus bus, IDomainNotificationHandler<DomainNotification> notifications)
+        protected CommandHandler(IUnitOfWork uow,
+                                 IMediatorHandler mediator,
+                                 INotificationHandler<DomainNotification> notifications)
         {
             _uow = uow;
-            _bus = bus;
-            _notifications = notifications;
+            _mediator = mediator;
+            _notifications = (DomainNotificationHandler)notifications;
         }
 
         protected void NotificarValidacoesErro(ValidationResult validationResult)
         {
             foreach (var error in validationResult.Errors)
             {
-                _bus.RaiseEvent(new DomainNotification(error.PropertyName, error.ErrorMessage));
+                _mediator.PublicarEvento(new DomainNotification(error.PropertyName, error.ErrorMessage));
             }
         }
 
@@ -37,7 +39,7 @@ namespace Eventos.IO.Domain.CommandHandlers
                 return true;
 
             Console.WriteLine("Ocorreu um erro ao salvar os dados no banco");
-            _bus.RaiseEvent(new DomainNotification("Commit", "Ocorreu um erro ao salvar os dados no banco"));
+            _mediator.PublicarEvento(new DomainNotification("Commit", "Ocorreu um erro ao salvar os dados no banco"));
             return false;
         }
     }

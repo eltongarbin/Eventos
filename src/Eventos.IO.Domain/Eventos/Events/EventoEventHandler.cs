@@ -1,15 +1,15 @@
-﻿using Eventos.IO.Domain.Core.Events;
-using Eventos.IO.Domain.Eventos.Events;
+﻿using Eventos.IO.Domain.Eventos.Events;
+using MediatR;
 using System;
 
 namespace Eventos.IO.Domain.Eventos.EventHandlers
 {
     public class EventoEventHandler :
-        IHandler<EventoRegistradoEvent>,
-        IHandler<EventoAtualizadoEvent>,
-        IHandler<EventoExcluidoEvent>,
-        IHandler<EnderecoEventoAdicionadoEvent>,
-        IHandler<EnderecoEventoAtualizadoEvent>
+        INotificationHandler<EventoRegistradoEvent>,
+        INotificationHandler<EventoAtualizadoEvent>,
+        INotificationHandler<EventoExcluidoEvent>,
+        INotificationHandler<EnderecoEventoAdicionadoEvent>,
+        INotificationHandler<EnderecoEventoAtualizadoEvent>
     {
         public void Handle(EventoRegistradoEvent message)
         {

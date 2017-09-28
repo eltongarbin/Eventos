@@ -1,4 +1,3 @@
-using Eventos.IO.Domain.Core.Bus;
 using Eventos.IO.Domain.Core.Notifications;
 using Eventos.IO.Domain.Interfaces;
 using Eventos.IO.Domain.Organizadores.Commands;
@@ -6,6 +5,7 @@ using Eventos.IO.Domain.Organizadores.Repository;
 using Eventos.IO.Infra.CrossCutting.Identity.Authorization;
 using Eventos.IO.Infra.CrossCutting.Identity.Models;
 using Eventos.IO.Infra.CrossCutting.Identity.Models.AccountViewModels;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -24,26 +24,26 @@ namespace Eventos.IO.Services.Api.Controllers
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly ILogger _logger;
-        private readonly IBus _bus;
+        private readonly IMediatorHandler _mediator;
         private readonly IOrganizadorRepository _organizadorRepository;
         private readonly JwtTokenOptions _jwtTokenOptions;
 
         private static long ToUnixEpochDate(DateTime date) =>
             (long)Math.Round((date.ToUniversalTime() - new DateTimeOffset(1970, 1, 1, 0, 0, 0, TimeSpan.Zero)).TotalSeconds);
 
-        public AccountController(IDomainNotificationHandler<DomainNotification> notifications,
+        public AccountController(INotificationHandler<DomainNotification> notifications,
                                  IUser user,
                                  UserManager<ApplicationUser> userManager,
                                  SignInManager<ApplicationUser> signInManager,
                                  ILoggerFactory loggerFactory,
-                                 IBus bus,
+                                 IMediatorHandler mediator,
                                  IOrganizadorRepository organizadorRepository,
                                  IOptions<JwtTokenOptions> jwtTokenOptions)
-            : base(notifications, user, bus)
+            : base(notifications, user, mediator)
         {
             _userManager = userManager;
             _signInManager = signInManager;
-            _bus = bus;
+            _mediator = mediator;
             _organizadorRepository = organizadorRepository;
             _jwtTokenOptions = jwtTokenOptions.Value;
 
@@ -82,7 +82,7 @@ namespace Eventos.IO.Services.Api.Controllers
             if (result.Succeeded)
             {
                 var registroCommand = new RegistrarOrganizadorCommand(Guid.Parse(user.Id), model.Nome, model.CPF, user.Email);
-                _bus.SendCommand(registroCommand);
+                await _mediator.EnviarComando(registroCommand);
 
                 if (!OperacaoValida())
                 {

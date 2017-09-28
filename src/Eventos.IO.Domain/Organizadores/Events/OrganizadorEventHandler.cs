@@ -1,9 +1,9 @@
-﻿using Eventos.IO.Domain.Core.Events;
+﻿using MediatR;
 
 namespace Eventos.IO.Domain.Organizadores.Events
 {
     public class OrganizadorEventHandler :
-        IHandler<OrganizadorRegistradoEvent>
+        INotificationHandler<OrganizadorRegistradoEvent>
     {
         public void Handle(OrganizadorRegistradoEvent message)
         {
