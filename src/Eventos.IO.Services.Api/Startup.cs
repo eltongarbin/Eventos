@@ -26,6 +26,7 @@ using Microsoft.IdentityModel.Tokens;
 using Swashbuckle.AspNetCore.Swagger;
 using System;
 using System.Text;
+using IConfigurationProvider = AutoMapper.IConfigurationProvider;
 
 namespace Eventos.IO.Services.Api
 {
@@ -40,8 +41,8 @@ namespace Eventos.IO.Services.Api
         {
             var builder = new ConfigurationBuilder()
                 .SetBasePath(env.ContentRootPath)
-                .AddJsonFile("appsettings.json", false, true)
-                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", true)
+                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
                 .AddEnvironmentVariables();
             Configuration = builder.Build();
         }
@@ -133,6 +134,9 @@ namespace Eventos.IO.Services.Api
                     }
                 });
             });
+
+            services.AddSingleton(Mapper.Configuration);
+            services.AddScoped<IMapper>(sp => new Mapper(sp.GetRequiredService<IConfigurationProvider>(), sp.GetService));
 
             services.AddMediatR(typeof(Startup));
 

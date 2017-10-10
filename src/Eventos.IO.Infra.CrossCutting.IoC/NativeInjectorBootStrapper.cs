@@ -3,6 +3,7 @@ using Eventos.IO.Domain.Eventos.Commands;
 using Eventos.IO.Domain.Eventos.EventHandlers;
 using Eventos.IO.Domain.Eventos.Events;
 using Eventos.IO.Domain.Eventos.Repository;
+using Eventos.IO.Domain.Handlers;
 using Eventos.IO.Domain.Interfaces;
 using Eventos.IO.Domain.Organizadores.Commands;
 using Eventos.IO.Domain.Organizadores.Events;
@@ -24,10 +25,10 @@ namespace Eventos.IO.Infra.CrossCutting.IoC
     {
         public static void RegisterServices(IServiceCollection services)
         {
-            // ASPNET
-            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-
             #region Domain
+            // Bus (Mediator)
+            services.AddScoped<IMediatorHandler, MediatorHandler>();
+
             // Commands
             services.AddScoped<INotificationHandler<RegistrarEventoCommand>, EventoCommandHandler>();
             services.AddScoped<INotificationHandler<AtualizarEventoCommand>, EventoCommandHandler>();
