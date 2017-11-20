@@ -67,11 +67,8 @@ namespace Eventos.IO.Services.Api.Controllers
         [Route("eventos")]
         public IActionResult Post([FromBody] EventoViewModel eventoViewModel)
         {
-            if (!ModelState.IsValid)
-            {
-                NotificarErroModelInvalida();
+            if (!ModelStateValida())
                 return Response();
-            }
 
             var eventoCommand = _mapper.Map<RegistrarEventoCommand>(eventoViewModel);
             _mediator.EnviarComando(eventoCommand);
@@ -84,11 +81,8 @@ namespace Eventos.IO.Services.Api.Controllers
         [Route("eventos")]
         public IActionResult Put([FromBody] EventoViewModel eventoViewModel)
         {
-            if (!ModelState.IsValid)
-            {
-                NotificarErroModelInvalida();
+            if (!ModelStateValida())
                 return Response();
-            }
 
             var atualizarEventoCommand = _mapper.Map<AtualizarEventoCommand>(eventoViewModel);
             _mediator.EnviarComando(atualizarEventoCommand);
@@ -104,6 +98,14 @@ namespace Eventos.IO.Services.Api.Controllers
             _mediator.EnviarComando(new ExcluirEventoCommand(id));
 
             return Response();
+        }
+
+        private bool ModelStateValida()
+        {
+            if (ModelState.IsValid) return true;
+
+            NotificarErroModelInvalida();
+            return false;
         }
     }
 }

@@ -9,10 +9,12 @@ namespace Eventos.IO.Domain.Handlers
     public class MediatorHandler : IMediatorHandler
     {
         private readonly IMediator _mediator;
+        private readonly IEventStore _eventStore;
 
-        public MediatorHandler(IMediator mediator)
+        public MediatorHandler(IMediator mediator, IEventStore eventStore)
         {
             _mediator = mediator;
+            _eventStore = eventStore;
         }
 
         public Task EnviarComando<T>(T comando) where T : Command
@@ -22,6 +24,9 @@ namespace Eventos.IO.Domain.Handlers
 
         public Task PublicarEvento<T>(T evento) where T : Event
         {
+            if (!evento.MessageType.Equals("DomainNotification"))
+                _eventStore?.SalvarEvento(evento);
+
             return Publicar(evento);
         }
 
