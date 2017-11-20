@@ -14,7 +14,7 @@ namespace Eventos.IO.Domain.Core.Notifications
             _notifications = new List<DomainNotification>();
         }
 
-        public List<DomainNotification> GetNotifications()
+        public virtual List<DomainNotification> GetNotifications()
         {
             return _notifications;
         }
@@ -26,7 +26,7 @@ namespace Eventos.IO.Domain.Core.Notifications
             Console.WriteLine($"Erro: {message.Key} - {message.Value}");
         }
 
-        public bool HasNotifications()
+        public virtual bool HasNotifications()
         {
             return _notifications.Any();
         }
