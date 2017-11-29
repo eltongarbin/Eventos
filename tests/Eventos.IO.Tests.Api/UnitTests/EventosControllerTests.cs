@@ -73,5 +73,27 @@ namespace Eventos.IO.Tests.Api.UnitTests
             mockMediator.Verify(m => m.EnviarComando(eventoCommand), Times.Once);
             Assert.IsType<OkObjectResult>(result);
         }
+
+        [Fact]
+        public void EventosController_RegistrarEvento_RetornarComErrosDeModelState()
+        {
+            // Arrange
+            var notificationList = new List<DomainNotification>
+            {
+                new DomainNotification("Erro", "ModelError")
+            };
+
+            mockNotification.Setup(m => m.GetNotifications()).Returns(notificationList);
+            mockNotification.Setup(m => m.HasNotifications()).Returns(true);
+
+            eventosController.ModelState.AddModelError("Erro", "ModelError");
+
+            // Act
+            var result = eventosController.Post(new EventoViewModel());
+
+            // Assert
+            mockMediator.Verify(m => m.EnviarComando(It.IsAny<RegistrarEventoCommand>()), Times.Never);
+            Assert.IsType<BadRequestObjectResult>(result);
+        }
     }
 }
