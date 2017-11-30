@@ -95,5 +95,49 @@ namespace Eventos.IO.Tests.Api.UnitTests
             mockMediator.Verify(m => m.EnviarComando(It.IsAny<RegistrarEventoCommand>()), Times.Never);
             Assert.IsType<BadRequestObjectResult>(result);
         }
+
+        [Fact]
+        public void EventosController_RegistrarEvento_RetornarComErrosDeDominio()
+        {
+            // Arrange
+            var eventoViewModel = new EventoViewModel();
+            var eventoCommand = new RegistrarEventoCommand("Teste",
+                                                           "",
+                                                           "",
+                                                           DateTime.Now,
+                                                           DateTime.Now.AddDays(1),
+                                                           true,
+                                                           0,
+                                                           true,
+                                                           "",
+                                                           Guid.NewGuid(),
+                                                           Guid.NewGuid(),
+                                                           new IncluirEnderecoEventoCommand(Guid.NewGuid(),
+                                                                                            "",
+                                                                                            null,
+                                                                                            "",
+                                                                                            "",
+                                                                                            "",
+                                                                                            "",
+                                                                                            "",
+                                                                                            null));
+
+            mockMapper.Setup(m => m.Map<RegistrarEventoCommand>(eventoViewModel)).Returns(eventoCommand);
+
+            var notificationList = new List<DomainNotification>
+            {
+                new DomainNotification("Erro", "Erro ao adicionar o evento")
+            };
+
+            mockNotification.Setup(m => m.GetNotifications()).Returns(notificationList);
+            mockNotification.Setup(m => m.HasNotifications()).Returns(true);
+
+            // Act
+            var result = eventosController.Post(new EventoViewModel());
+
+            // Assert
+            mockMediator.Verify(m => m.EnviarComando(It.IsAny<RegistrarEventoCommand>()), Times.Once);
+            Assert.IsType<BadRequestObjectResult>(result);
+        }
     }
 }
