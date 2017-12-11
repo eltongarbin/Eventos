@@ -6,8 +6,8 @@ import { HttpModule } from '@angular/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 // bootstrap
-import { CollapseModule } from 'ng2-bootstrap/collapse';
-import { CarouselModule } from 'ng2-bootstrap/carousel';
+import { CollapseModule } from 'ngx-bootstrap/collapse';
+import { CarouselModule } from 'ngx-bootstrap/carousel';
 
 // imports
 import { MyDatePickerModule } from "mydatepicker";
@@ -31,9 +31,7 @@ import { AcessoNegadoComponent } from "./shared/acesso-negado/acesso-negado.comp
 
 // services
 import { OrganizadorService } from "./usuario/organizador.service";
-import { EventoService } from "./eventos/evento.service";
-import { ToastrCustomOption } from "./utils/ToastrCustomOption";
-import { AuthService } from "./shared/auth-service";
+import { EventoService } from "./eventos/services/evento.service";
 
 // others
 import { rootRouterConfig } from './app.routes';
@@ -66,9 +64,7 @@ import { rootRouterConfig } from './app.routes';
   ],
   providers: [
     OrganizadorService,
-    EventoService,
-    AuthService,
-    { provide: ToastOptions, useClass: ToastrCustomOption }
+    EventoService
   ],
   bootstrap: [AppComponent]
 })

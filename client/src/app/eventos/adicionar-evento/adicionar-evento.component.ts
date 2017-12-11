@@ -2,10 +2,10 @@ import { Component, ViewChildren, ElementRef, OnInit, ViewContainerRef, AfterVie
 import { FormControlName, FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
 
-import { GenericValidator } from "app/utils/generic-form-validator";
-import { DateUtils } from "app/utils/date-utils";
-import { Evento, Categoria, Endereco } from "app/eventos/evento";
-import { EventoService } from "app/eventos/evento.service";
+import { GenericValidator } from "../../common/validation/generic-form-validator";
+import { DateUtils } from "../../common/data-type-utils/date-utils";
+import { Evento, Endereco, Categoria } from "../models/evento";
+import { EventoService } from "../services/evento.service";
 
 import { Observable } from "rxjs/Observable";
 import 'rxjs/add/observable/fromEvent';
@@ -16,8 +16,7 @@ import { ToastsManager, Toast } from 'ng2-toastr/ng2-toastr';
 
 @Component({
     selector: 'app-adicionar-evento',
-    templateUrl: './adicionar-evento.component.html',
-    styleUrls: ['./adicionar-evento.component.css']
+    templateUrl: './adicionar-evento.component.html'
 })
 export class AdicionarEventoComponent implements OnInit, AfterViewInit {
     @ViewChildren(FormControlName, { read: ElementRef }) formInputElements: ElementRef[];

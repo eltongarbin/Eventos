@@ -3,7 +3,7 @@ import { Response, RequestOptions, Headers } from '@angular/http';
 import { Observable } from "rxjs/Observable";
 import 'rxjs/add/observable/throw';
 
-export abstract class ServiceBase {
+export abstract class BaseService {
     protected UrlServiceV1: string = 'http://localhost:50049/api/v1/';
     public Token: string = "";
 

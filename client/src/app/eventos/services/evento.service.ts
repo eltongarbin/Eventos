@@ -3,11 +3,11 @@ import { Http, Response } from "@angular/http";
 
 import { Observable } from "rxjs/Observable";
 
-import { Categoria, Evento } from "./evento";
-import { ServiceBase } from "app/shared/service-base";
+import { Evento, Categoria, Endereco } from "../models/evento";
+import { BaseService } from "../../services/base.service";
 
 @Injectable()
-export class EventoService extends ServiceBase {
+export class EventoService extends BaseService {
     constructor(private http: Http) { super(); }
 
     obterMeusEventos(): Observable<Evento[]> {

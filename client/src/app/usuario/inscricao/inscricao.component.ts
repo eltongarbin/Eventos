@@ -11,7 +11,7 @@ import { Observable } from "rxjs/Observable";
 
 import { Organizador } from "./../organizador";
 import { OrganizadorService } from "./../organizador.service";
-import { GenericValidator } from "app/utils/generic-form-validator";
+import { GenericValidator } from "../../common/validation/generic-form-validator";
 
 @Component({
     selector: 'app-inscricao',
