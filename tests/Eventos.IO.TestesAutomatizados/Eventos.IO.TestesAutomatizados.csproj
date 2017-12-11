@@ -44,6 +44,7 @@
       <HintPath>..\..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
     <Reference Include="TechTalk.SpecFlow, Version=2.2.0.0, Culture=neutral, PublicKeyToken=0778194805d6db41, processorArchitecture=MSIL">
@@ -69,11 +70,30 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CadastroOrganizador\CadastroDeOrganizadorSteps.cs" />
+    <Compile Include="CadastroOrganizador\CadastroDeOrganizador.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CadastroDeOrganizador.feature</DependentUpon>
+    </Compile>
+    <Compile Include="Config\ConfigurationHelper.cs" />
+    <Compile Include="Config\SeleniumHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="CadastroOrganizador\CadastroDeOrganizador.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>CadastroDeOrganizador.feature.cs</LastGenOutput>
+    </None>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="CadastrarEvento\" />
+    <Folder Include="Login\" />
+    <Folder Include="ScreenShots\" />
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
