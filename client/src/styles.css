@@ -1,4 +1,8 @@
-/* You can add global styles to this file, and also import other style files */
+input,
+select,
+textarea {
+    max-width: 280px;
+}
 
 .main-container {
    padding-right: 15px;
