@@ -2,32 +2,33 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from "@angular/router";
 
 @Component({
-    selector: 'app-menu-login',
-    templateUrl: './menu-login.component.html'
+  selector: 'app-menu-login',
+  templateUrl: './menu-login.component.html'
 })
 export class MenuLoginComponent implements OnInit {
-    public token;
-    public user;
-    public nome: string = "";
+  public token;
+  public user;
+  public nome: string = "";
 
-    constructor(private router: Router) {
-        this.token = localStorage.getItem('eio.token');
-        this.user = JSON.parse(localStorage.getItem('eio.user'));
-    }
+  constructor(private router: Router) {
+    this.token = localStorage.getItem('eio.token');
+    this.user = JSON.parse(localStorage.getItem('eio.user'));
+  }
 
-    usuarioLogado(): boolean {
-        return this.token !== null;
-    }
 
-    logout() {
-        localStorage.removeItem('eio.token');
-        localStorage.removeItem('eio.user');
-        this.router.navigateByUrl('./home');
-    }
+  ngOnInit() {
+    if (this.user)
+      this.nome = this.user.nome;
+  }
 
-    ngOnInit() {
-        if (this.user) {
-            this.nome = this.user.userName;
-        }
-    }
+  usuarioLogado(): boolean {
+    return this.token !== null;
+  }
+
+  logout() {
+    localStorage.removeItem('eio.token');
+    localStorage.removeItem('eio.user');
+    this.router.navigateByUrl('/');
+  }
 }
+

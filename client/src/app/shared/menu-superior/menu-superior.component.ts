@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-menu-superior',
@@ -8,6 +8,8 @@ export class MenuSuperiorComponent {
   private token: string;
 
   constructor() { }
+
+  public isCollapsed: boolean = true;
 
   usuarioLogado(): boolean {
     this.token = localStorage.getItem('eio.token');
