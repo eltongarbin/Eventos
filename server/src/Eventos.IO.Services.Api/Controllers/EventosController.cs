@@ -41,7 +41,7 @@ namespace Eventos.IO.Services.Api.Controllers
         [HttpGet]
         [AllowAnonymous]
         [Route("eventos/{id:guid}")]
-        public EventoViewModel Get(Guid id, int version)
+        public EventoViewModel Get(Guid id)
         {
             return _mapper.Map<EventoViewModel>(_eventoRepository.ObterPorId(id));
         }
@@ -84,10 +84,10 @@ namespace Eventos.IO.Services.Api.Controllers
             if (!ModelStateValida())
                 return Response();
 
-            var atualizarEventoCommand = _mapper.Map<AtualizarEventoCommand>(eventoViewModel);
-            _mediator.EnviarComando(atualizarEventoCommand);
+            var eventoCommand = _mapper.Map<AtualizarEventoCommand>(eventoViewModel);
+            _mediator.EnviarComando(eventoCommand);
 
-            return Response(eventoViewModel);
+            return Response(eventoCommand);
         }
 
         [HttpDelete]
@@ -95,16 +95,48 @@ namespace Eventos.IO.Services.Api.Controllers
         [Route("eventos/{id:guid}")]
         public IActionResult Delete(Guid id)
         {
-            _mediator.EnviarComando(new ExcluirEventoCommand(id));
+            var eventoViewModel = new EventoViewModel { Id = id };
+            var eventoCommand = _mapper.Map<ExcluirEventoCommand>(eventoViewModel);
+            _mediator.EnviarComando(eventoCommand);
 
-            return Response();
+            return Response(eventoCommand);
+        }
+
+        [HttpPost]
+        [Route("endereco")]
+        [Authorize(Policy = "PodeGravar")]
+        public IActionResult Post([FromBody]EnderecoViewModel enderecoViewModel)
+        {
+            if (!ModelStateValida())
+                return Response();
+
+            var eventoCommand = _mapper.Map<IncluirEnderecoEventoCommand>(enderecoViewModel);
+            _mediator.EnviarComando(eventoCommand);
+
+            return Response(eventoCommand);
+        }
+
+        [HttpPut]
+        [Route("endereco")]
+        [Authorize(Policy = "PodeGravar")]
+        public IActionResult Put([FromBody]EnderecoViewModel enderecoViewModel)
+        {
+            if (!ModelStateValida())
+                return Response();
+
+            var eventoCommand = _mapper.Map<AtualizarEnderecoEventoCommand>(enderecoViewModel);
+            _mediator.EnviarComando(eventoCommand);
+
+            return Response(eventoCommand);
         }
 
         private bool ModelStateValida()
         {
-            if (ModelState.IsValid) return true;
+            if (ModelState.IsValid)
+                return true;
 
             NotificarErroModelInvalida();
+
             return false;
         }
     }

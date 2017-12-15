@@ -1,8 +1,6 @@
-﻿using Eventos.IO.Domain.Eventos.Events;
-using MediatR;
-using System;
+﻿using MediatR;
 
-namespace Eventos.IO.Domain.Eventos.EventHandlers
+namespace Eventos.IO.Domain.Eventos.Events
 {
     public class EventoEventHandler :
         INotificationHandler<EventoRegistradoEvent>,
@@ -13,32 +11,27 @@ namespace Eventos.IO.Domain.Eventos.EventHandlers
     {
         public void Handle(EventoRegistradoEvent message)
         {
-            Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine("Evento Registrado com sucesso");
+            // TODO: Disparar alguma ação
         }
 
         public void Handle(EventoAtualizadoEvent message)
         {
-            Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine("Evento Atualizado com sucesso");
+            // TODO: Disparar alguma ação
         }
 
         public void Handle(EventoExcluidoEvent message)
         {
-            Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine("Evento Excluido com sucesso");
+            // TODO: Disparar alguma ação
         }
 
         public void Handle(EnderecoEventoAdicionadoEvent message)
         {
-            Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine("Endereco do evento adicionado com sucesso");
+            // TODO: Disparar alguma ação
         }
 
         public void Handle(EnderecoEventoAtualizadoEvent message)
         {
-            Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine("Endereco do evento atualizado com sucesso");
+            // TODO: Disparar alguma ação
         }
     }
 }

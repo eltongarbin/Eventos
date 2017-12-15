@@ -1,6 +1,6 @@
-﻿using System;
-using Eventos.IO.Domain.Core.Models;
+﻿using Eventos.IO.Domain.Core.Models;
 using FluentValidation;
+using System;
 
 namespace Eventos.IO.Domain.Eventos
 {

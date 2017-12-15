@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
@@ -26,7 +26,7 @@ namespace Eventos.IO.Services.Api.Controllers
         private readonly ILogger _logger;
         private readonly IMediatorHandler _mediator;
         private readonly IOrganizadorRepository _organizadorRepository;
-        private readonly JwtTokenOptions _jwtTokenOptions;
+        private readonly TokenDescriptor _tokenDescriptor;
 
         private static long ToUnixEpochDate(DateTime date) =>
             (long)Math.Round((date.ToUniversalTime() - new DateTimeOffset(1970, 1, 1, 0, 0, 0, TimeSpan.Zero)).TotalSeconds);
@@ -38,17 +38,16 @@ namespace Eventos.IO.Services.Api.Controllers
                                  ILoggerFactory loggerFactory,
                                  IMediatorHandler mediator,
                                  IOrganizadorRepository organizadorRepository,
-                                 IOptions<JwtTokenOptions> jwtTokenOptions)
+                                 TokenDescriptor tokenDescriptor)
             : base(notifications, user, mediator)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _mediator = mediator;
             _organizadorRepository = organizadorRepository;
-            _jwtTokenOptions = jwtTokenOptions.Value;
-
-            ThrowIfInvalidOptions(_jwtTokenOptions);
+            _mediator = mediator;
             _logger = loggerFactory.CreateLogger<AccountController>();
+            _tokenDescriptor = tokenDescriptor;
         }
 
         [HttpPost]
@@ -67,7 +66,7 @@ namespace Eventos.IO.Services.Api.Controllers
             if (!ModelState.IsValid)
             {
                 NotificarErroModelInvalida();
-                return Response(model);
+                return Response();
             }
 
             var user = new ApplicationUser
@@ -75,12 +74,13 @@ namespace Eventos.IO.Services.Api.Controllers
                 UserName = model.Email,
                 Email = model.Email
             };
-            // user.Claims.Add(new IdentityUserClaim<string> { ClaimType = "Eventos", ClaimValue = "Ler" });
-            // user.Claims.Add(new IdentityUserClaim<string> { ClaimType = "Eventos", ClaimValue = "Gravar" });
 
-            var result = await _userManager.CreateAsync(user, model.Password);
+            var result = await _userManager.CreateAsync(user, model.Senha);
             if (result.Succeeded)
             {
+                await _userManager.AddClaimAsync(user, new Claim("Eventos", "Ler"));
+                await _userManager.AddClaimAsync(user, new Claim("Eventos", "Gravar"));
+
                 var registroCommand = new RegistrarOrganizadorCommand(Guid.Parse(user.Id), model.Nome, model.CPF, user.Email);
                 await _mediator.EnviarComando(registroCommand);
 
@@ -94,8 +94,9 @@ namespace Eventos.IO.Services.Api.Controllers
                 var response = GerarTokenUsuario(new LoginViewModel
                 {
                     Email = model.Email,
-                    Password = model.Password
+                    Senha = model.Senha
                 });
+
                 return Response(response);
             }
 
@@ -114,7 +115,8 @@ namespace Eventos.IO.Services.Api.Controllers
                 return Response(model);
             }
 
-            var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, false, true);
+            var result = await _signInManager.PasswordSignInAsync(model.Email, model.Senha, false, true);
+
             if (result.Succeeded)
             {
                 _logger.LogInformation(1, "Usuário logado com sucesso");
@@ -133,23 +135,32 @@ namespace Eventos.IO.Services.Api.Controllers
 
             userClaims.Add(new Claim(JwtRegisteredClaimNames.Sub, user.Id));
             userClaims.Add(new Claim(JwtRegisteredClaimNames.Email, user.Email));
-            userClaims.Add(new Claim(JwtRegisteredClaimNames.Jti, await _jwtTokenOptions.JtiGenerator()));
-            userClaims.Add(new Claim(JwtRegisteredClaimNames.Iat, ToUnixEpochDate(_jwtTokenOptions.IssuedAt).ToString(), ClaimValueTypes.Integer64));
+            userClaims.Add(new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()));
+            userClaims.Add(new Claim(JwtRegisteredClaimNames.Iat, ToUnixEpochDate(DateTime.UtcNow).ToString(), ClaimValueTypes.Integer64));
 
-            var jwt = new JwtSecurityToken(_jwtTokenOptions.Issuer,
-                                           _jwtTokenOptions.Audience,
-                                           userClaims,
-                                           _jwtTokenOptions.NotBefore,
-                                           _jwtTokenOptions.Expiration,
-                                           _jwtTokenOptions.SigningCredentials);
+            // Necessário converver para IdentityClaims
+            var identityClaims = new ClaimsIdentity();
+            identityClaims.AddClaims(userClaims);
 
-            var encodedJwt = new JwtSecurityTokenHandler().WriteToken(jwt);
+            var handler = new JwtSecurityTokenHandler();
+            var signingConf = new SigningCredentialsConfiguration();
+            var securityToken = handler.CreateToken(new SecurityTokenDescriptor
+            {
+                Issuer = _tokenDescriptor.Issuer,
+                Audience = _tokenDescriptor.Audience,
+                SigningCredentials = signingConf.SigningCredentials,
+                Subject = identityClaims,
+                NotBefore = DateTime.Now,
+                Expires = DateTime.Now.AddMinutes(_tokenDescriptor.MinutesValid)
+            });
+
+            var encodedJwt = handler.WriteToken(securityToken);
             var orgUser = _organizadorRepository.ObterPorId(Guid.Parse(user.Id));
 
             var response = new
             {
                 access_token = encodedJwt,
-                expires_in = (int)_jwtTokenOptions.ValidFor.TotalSeconds,
+                expires_in = DateTime.Now.AddMinutes(_tokenDescriptor.MinutesValid),
                 user = new
                 {
                     id = user.Id,
@@ -160,21 +171,6 @@ namespace Eventos.IO.Services.Api.Controllers
             };
 
             return response;
-        }
-
-        private static void ThrowIfInvalidOptions(JwtTokenOptions options)
-        {
-            if (options == null)
-                throw new ArgumentNullException(nameof(options));
-
-            if (options.ValidFor <= TimeSpan.Zero)
-                throw new ArgumentException("Must be a non-zero TimeSpan.", nameof(JwtTokenOptions.ValidFor));
-
-            if (options.SigningCredentials == null)
-                throw new ArgumentNullException(nameof(JwtTokenOptions.SigningCredentials));
-
-            if (options.JtiGenerator == null)
-                throw new ArgumentNullException(nameof(JwtTokenOptions.JtiGenerator));
         }
     }
 }

@@ -1,6 +1,5 @@
 ﻿using Eventos.IO.Domain.Core.Notifications;
 using Eventos.IO.Domain.Eventos.Commands;
-using Eventos.IO.Domain.Eventos.EventHandlers;
 using Eventos.IO.Domain.Eventos.Events;
 using Eventos.IO.Domain.Eventos.Repository;
 using Eventos.IO.Domain.Handlers;
@@ -12,10 +11,11 @@ using Eventos.IO.Infra.CrossCutting.AspNetFilters;
 using Eventos.IO.Infra.CrossCutting.Identity.Models;
 using Eventos.IO.Infra.CrossCutting.Identity.Services;
 using Eventos.IO.Infra.Data.Context;
+using Eventos.IO.Infra.Data.EventSourcing;
 using Eventos.IO.Infra.Data.Repository;
+using Eventos.IO.Infra.Data.Repository.EventSourcing;
 using Eventos.IO.Infra.Data.UoW;
 using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
@@ -53,6 +53,11 @@ namespace Eventos.IO.Infra.CrossCutting.IoC
             services.AddScoped<IOrganizadorRepository, OrganizadorRepository>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<EventosContext>();
+
+            // Data EventSourcing
+            services.AddScoped<IEventStoreRepository, EventStoreSQLRepository>();
+            services.AddScoped<IEventStore, SqlEventStore>();
+            services.AddScoped<EventStoreSQLContext>();
 
             // Identity
             services.AddTransient<IEmailSender, AuthMessageSender>();

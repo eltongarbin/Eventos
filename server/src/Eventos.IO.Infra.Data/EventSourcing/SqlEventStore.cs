@@ -1,6 +1,6 @@
 using Eventos.IO.Domain.Core.Events;
 using Eventos.IO.Domain.Interfaces;
-using Eventos.IO.Infra.Data.Repository;
+using Eventos.IO.Infra.Data.Repository.EventSourcing;
 using Newtonsoft.Json;
 
 namespace Eventos.IO.Infra.Data.EventSourcing

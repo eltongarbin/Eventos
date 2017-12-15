@@ -15,10 +15,10 @@ namespace Eventos.IO.Domain.Eventos.Commands
         public string Estado { get; private set; }
         public Guid? EventoId { get; private set; }
 
-        public AtualizarEnderecoEventoCommand(Guid id, 
-                                              string logradouro, 
-                                              string numero, 
-                                              string complemento, 
+        public AtualizarEnderecoEventoCommand(Guid id,
+                                              string logradouro,
+                                              string numero,
+                                              string complemento,
                                               string bairro,
                                               string cep,
                                               string cidade,

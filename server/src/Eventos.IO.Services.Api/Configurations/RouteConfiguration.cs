@@ -1,12 +1,13 @@
-﻿using System;
-using System.Linq;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using Microsoft.AspNetCore.Mvc.Routing;
+using Microsoft.Extensions.DependencyInjection;
+using System;
+using System.Linq;
 
 namespace Eventos.IO.Services.Api.Configurations
 {
-    public class RouteConvention : IApplicationModelConvention
+    internal class RouteConvention : IApplicationModelConvention
     {
         private readonly AttributeRouteModel _centralPrefix;
 
@@ -24,9 +25,8 @@ namespace Eventos.IO.Services.Api.Configurations
                 {
                     foreach (var selectorModel in matchedSelectors)
                     {
-                        selectorModel.AttributeRouteModel =
-                            AttributeRouteModel.CombineAttributeRouteModel(_centralPrefix,
-                                selectorModel.AttributeRouteModel);
+                        selectorModel.AttributeRouteModel = AttributeRouteModel.CombineAttributeRouteModel(_centralPrefix,
+                            selectorModel.AttributeRouteModel);
                     }
                 }
 
@@ -42,11 +42,21 @@ namespace Eventos.IO.Services.Api.Configurations
         }
     }
 
-    public static class MvcOptionsExtensions
+    public static class MvcRouteExtensions
     {
-        public static void UseCentralRoutePrefix(this MvcOptions opts, IRouteTemplateProvider routeAttribute)
+        private static void UseCentralRoutePrefix(this MvcOptions opts, IRouteTemplateProvider routeAttribute)
         {
             opts.Conventions.Insert(0, new RouteConvention(routeAttribute));
+        }
+
+        public static void AddApiVersioning(this IServiceCollection services, string routeUrl)
+        {
+            if (services == null) throw new ArgumentNullException(nameof(services));
+
+            services.Configure<MvcOptions>(opt =>
+            {
+                opt.UseCentralRoutePrefix(new RouteAttribute(routeUrl));
+            });
         }
     }
 }

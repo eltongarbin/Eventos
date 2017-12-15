@@ -18,5 +18,5 @@ namespace Eventos.IO.Services.Api.ViewModels
         [Required(ErrorMessage = "O e-mail é requerido")]
         [EmailAddress(ErrorMessage = "E-mail em formato inválido")]
         public string Email { get; set; }
-    }   
+    }
 }

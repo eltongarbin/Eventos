@@ -14,13 +14,13 @@ namespace Eventos.IO.Domain.Eventos.Events
         public string Cidade { get; private set; }
         public string Estado { get; private set; }
 
-        public EnderecoEventoAdicionadoEvent(Guid enderecoId, 
-                                             string logradouro, 
-                                             string numero, 
-                                             string complemento, 
+        public EnderecoEventoAdicionadoEvent(Guid enderecoId,
+                                             string logradouro,
+                                             string numero,
+                                             string complemento,
                                              string bairro,
                                              string cep,
-                                             string cidade, 
+                                             string cidade,
                                              string estado,
                                              Guid eventoId)
         {

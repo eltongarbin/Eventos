@@ -2,7 +2,6 @@
 using Eventos.IO.Domain.Interfaces;
 using FluentValidation.Results;
 using MediatR;
-using System;
 
 namespace Eventos.IO.Domain.Handlers
 {
@@ -34,11 +33,9 @@ namespace Eventos.IO.Domain.Handlers
             if (_notifications.HasNotifications())
                 return false;
 
-            var commandResponse = _uow.Commit();
-            if (commandResponse.Success)
+            if (_uow.Commit())
                 return true;
 
-            Console.WriteLine("Ocorreu um erro ao salvar os dados no banco");
             _mediator.PublicarEvento(new DomainNotification("Commit", "Ocorreu um erro ao salvar os dados no banco"));
             return false;
         }

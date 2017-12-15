@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc.Rendering;
-using System;
+﻿using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace Eventos.IO.Services.Api.ViewModels
@@ -20,11 +19,6 @@ namespace Eventos.IO.Services.Api.ViewModels
         public EnderecoViewModel()
         {
             Id = Guid.NewGuid();
-        }
-
-        public SelectList Estados()
-        {
-            return new SelectList(EstadoViewModel.ListarEstados(), "UF", "Nome");
         }
 
         public override string ToString()

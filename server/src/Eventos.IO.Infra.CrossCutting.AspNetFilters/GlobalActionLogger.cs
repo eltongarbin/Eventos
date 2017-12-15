@@ -1,14 +1,14 @@
 ﻿using Elmah.Io.Client;
 using Elmah.Io.Client.Models;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Linq;
-using Microsoft.AspNetCore.Http;
-using System.Collections.Generic;
 using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Eventos.IO.Infra.CrossCutting.AspNetFilters
 {
@@ -39,7 +39,7 @@ namespace Eventos.IO.Infra.CrossCutting.AspNetFilters
                     TimeStamp = DateTime.Now
                 };
 
-                _logger.LogInformation(1, data.ToString(), "Log de Auditoria");
+                _logger.LogInformation(1, data.ToString());
             }
             else if (_hostingEnvironment.IsProduction())
             {
@@ -67,7 +67,7 @@ namespace Eventos.IO.Infra.CrossCutting.AspNetFilters
             }
         }
 
-        private static IList<Item> Form(HttpContext httpContext)
+        private static List<Item> Form(HttpContext httpContext)
         {
             try
             {

@@ -7,7 +7,6 @@ namespace Eventos.IO.Domain.Eventos.Events
         public EventoExcluidoEvent(Guid id)
         {
             Id = id;
-
             AggregateId = id;
         }
     }

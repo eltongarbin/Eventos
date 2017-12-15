@@ -13,9 +13,9 @@ namespace Eventos.IO.Infra.Data.Mappings
                 .HasColumnType("varchar(150)")
                 .IsRequired();
 
-            builder.Ignore(c => c.ValidationResult);
+            builder.Ignore(e => e.ValidationResult);
 
-            builder.Ignore(c => c.CascadeMode);
+            builder.Ignore(e => e.CascadeMode);
 
             builder.ToTable("Categorias");
         }

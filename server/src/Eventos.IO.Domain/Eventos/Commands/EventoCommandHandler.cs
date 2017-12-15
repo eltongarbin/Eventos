@@ -33,9 +33,9 @@ namespace Eventos.IO.Domain.Eventos.Commands
 
         public void Handle(RegistrarEventoCommand message)
         {
-            var endereco = new Endereco(message.Endereco.Id, 
-                                        message.Endereco.Logradouro, 
-                                        message.Endereco.Numero, 
+            var endereco = new Endereco(message.Endereco.Id,
+                                        message.Endereco.Logradouro,
+                                        message.Endereco.Numero,
                                         message.Endereco.Complemento,
                                         message.Endereco.Bairro,
                                         message.Endereco.CEP,
@@ -118,15 +118,15 @@ namespace Eventos.IO.Domain.Eventos.Commands
 
             if (Commit())
             {
-                _mediator.PublicarEvento(new EventoAtualizadoEvent(evento.Id, 
-                                                          evento.Nome, 
-                                                          evento.DescricaoCurta, 
-                                                          evento.DescricaoLonga, 
-                                                          evento.DataInicio, 
-                                                          evento.DataFim, 
-                                                          evento.Gratuito, 
-                                                          evento.Valor, 
-                                                          evento.Online, 
+                _mediator.PublicarEvento(new EventoAtualizadoEvent(evento.Id,
+                                                          evento.Nome,
+                                                          evento.DescricaoCurta,
+                                                          evento.DescricaoLonga,
+                                                          evento.DataInicio,
+                                                          evento.DataFim,
+                                                          evento.Gratuito,
+                                                          evento.Valor,
+                                                          evento.Online,
                                                           evento.NomeEmpresa));
             }
         }
@@ -142,7 +142,8 @@ namespace Eventos.IO.Domain.Eventos.Commands
                 _mediator.PublicarEvento(new DomainNotification(message.MessageType, "Evento não pertencente ao Organizador"));
                 return;
             }
-            // TODO: Validações de negócio
+
+            // Validacoes de negocio
             eventoAtual.ExcluirEvento();
 
             _eventoRepository.Atualizar(eventoAtual);
@@ -173,14 +174,14 @@ namespace Eventos.IO.Domain.Eventos.Commands
 
         public void Handle(IncluirEnderecoEventoCommand message)
         {
-            var endereco = new Endereco(message.Id, 
-                                        message.Logradouro, 
-                                        message.Numero, 
-                                        message.Complemento, 
-                                        message.Bairro, 
-                                        message.CEP, 
-                                        message.Cidade, 
-                                        message.Estado, 
+            var endereco = new Endereco(message.Id,
+                                        message.Logradouro,
+                                        message.Numero,
+                                        message.Complemento,
+                                        message.Bairro,
+                                        message.CEP,
+                                        message.Cidade,
+                                        message.Estado,
                                         message.EventoId.Value);
             if (!endereco.EhValido())
             {

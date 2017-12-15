@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
-using Eventos.IO.Services.Api.ViewModels;
 using Eventos.IO.Domain.Eventos.Commands;
 using Eventos.IO.Domain.Organizadores.Commands;
+using Eventos.IO.Services.Api.ViewModels;
 using System;
 
 namespace Eventos.IO.Services.Api.AutoMapper

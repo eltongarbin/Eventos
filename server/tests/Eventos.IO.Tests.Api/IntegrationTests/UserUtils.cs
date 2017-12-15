@@ -14,7 +14,7 @@ namespace Eventos.IO.Tests.Api.IntegrationTests
             var user = new LoginViewModel
             {
                 Email = "elton@gmail.com",
-                Password = "Teste@123"
+                Senha = "Teste@123"
             };
 
             var postContent = new StringContent(JsonConvert.SerializeObject(user), Encoding.UTF8, "application/json");

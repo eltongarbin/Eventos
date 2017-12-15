@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Eventos.IO.Infra.Data.Repository
+namespace Eventos.IO.Infra.Data.Repository.EventSourcing
 {
     public interface IEventStoreRepository : IDisposable
     {

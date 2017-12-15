@@ -24,8 +24,8 @@ namespace Eventos.IO.Tests.Api.IntegrationTests
                 Nome = "Elton Diego",
                 CPF = "27960259267",
                 Email = "elton@gmail.com",
-                Password = "Teste@123",
-                ConfirmPassword = "Teste@123"
+                Senha = "Teste@123",
+                SenhaConfirmacao = "Teste@123"
             };
 
             var postContent = new StringContent(JsonConvert.SerializeObject(user), Encoding.UTF8, "application/json");

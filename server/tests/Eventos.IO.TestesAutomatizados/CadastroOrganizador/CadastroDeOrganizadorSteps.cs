@@ -47,7 +47,7 @@ namespace Eventos.IO.TestesAutomatizados.CadastroOrganizador
         public void EntaoSeraRegistradoERedirecionadoComSucesso()
         {
             var returnText = Browser.ObterTextoElementoPorId("saudacaoUsuario");
-            Assert.Contains("olá eduardo pires", returnText.ToLower());
+            Assert.Contains("olá elton diego", returnText.ToLower());
             Browser.ObterScreenShot("EvidenciaCadastro");
         }
     }
