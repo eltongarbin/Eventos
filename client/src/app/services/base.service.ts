@@ -14,7 +14,7 @@ export abstract class BaseService {
 
   constructor() { }
 
-  protected UrlServiceV1: string = "http://localhost:8287/api/v1/";
+  protected UrlServiceV1: string = "http://localhost:50049/api/v1/";
 
   protected obterAuthHeader(): RequestOptions {
     this.Token = localStorage.getItem('eio.token');

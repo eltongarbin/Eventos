@@ -14,6 +14,10 @@ namespace Eventos.IO.TestesAutomatizados.CadastroOrganizador
             Browser = SeleniumHelper.Instance();
         }
 
+        // AAA > Arrange, Act, Assert
+
+        // Arrange
+
         [Given(@"que o Organizador está no site, na página inicial")]
         public void DadoQueOOrganizadorEstaNoSiteNaPaginaInicial()
         {
@@ -37,11 +41,15 @@ namespace Eventos.IO.TestesAutomatizados.CadastroOrganizador
             Browser.PreencherTextBoxPorId(table.Rows[4][0], table.Rows[4][1]);
         }
 
+        // Act
+
         [When(@"clicar no botao registrar")]
         public void QuandoClicarNoBotaoRegistrar()
         {
             Browser.ClicarBottaoPorId("Registrar");
         }
+
+        // Assert
 
         [Then(@"Será registrado e redirecionado com sucesso")]
         public void EntaoSeraRegistradoERedirecionadoComSucesso()
