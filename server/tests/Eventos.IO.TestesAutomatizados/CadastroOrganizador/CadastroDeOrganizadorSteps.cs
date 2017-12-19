@@ -28,7 +28,7 @@ namespace Eventos.IO.TestesAutomatizados.CadastroOrganizador
         [Given(@"clica no link de registro")]
         public void DadoClicaNoLinkDeRegistro()
         {
-            Browser.ClicarLinkPorText("Registre-se");
+            Browser.ClicarLinkPorTexto("Registre-se");
         }
 
         [Given(@"preenche os campos com os valores")]
@@ -46,7 +46,7 @@ namespace Eventos.IO.TestesAutomatizados.CadastroOrganizador
         [When(@"clicar no botao registrar")]
         public void QuandoClicarNoBotaoRegistrar()
         {
-            Browser.ClicarBottaoPorId("Registrar");
+            Browser.ClicarBotaoPorId("Registrar");
         }
 
         // Assert
@@ -58,5 +58,69 @@ namespace Eventos.IO.TestesAutomatizados.CadastroOrganizador
             Assert.Contains("olá elton diego", returnText.ToLower());
             Browser.ObterScreenShot("EvidenciaCadastro");
         }
+
+        #region Cenários de falha
+
+        [Then(@"Recebe uma mensagem de erro de CPF já cadastrado")]
+        public void EntaoRecebeUmaMensagemDeErroDeCPFJaCadastrado()
+        {
+            var result = Browser.ObterTextoElementoPorClasse("alert-danger");
+            Assert.Contains("cpf ou e-mail já utilizados", result.ToLower());
+
+            Browser.ObterScreenShot("CPF_Erro");
+        }
+
+        [Then(@"recebe uma mensagem de erro de email já cadastrado")]
+        public void EntaoRecebeUmaMensagemDeErroDeEmailJaCadastrado()
+        {
+            var result = Browser.ObterTextoElementoPorClasse("alert-danger");
+            Assert.Contains("is already taken", result.ToLower());
+
+            Browser.ObterScreenShot("Email_Erro");
+        }
+
+        [Then(@"Recebe uma mensagem de erro de que a senha requer numero")]
+        public void EntaoRecebeUmaMensagemDeErroDeQueASenhaRequerNumero()
+        {
+            var result = Browser.ObterTextoElementoPorClasse("alert-danger");
+            Assert.Contains("passwords must have at least one digit ('0'-'9')", result.ToLower());
+        }
+
+        [Then(@"Recebe uma mensagem de erro de que a senha requer letra maiuscula")]
+        public void EntaoRecebeUmaMensagemDeErroDeQueASenhaRequerLetraMaiuscula()
+        {
+            var result = Browser.ObterTextoElementoPorClasse("alert-danger");
+            Assert.Contains("passwords must have at least one uppercase ('a'-'z')", result.ToLower());
+        }
+
+        [Then(@"Recebe uma mensagem de erro de que a senha requer letra minuscula")]
+        public void EntaoRecebeUmaMensagemDeErroDeQueASenhaRequerLetraMinuscula()
+        {
+            var result = Browser.ObterTextoElementoPorClasse("alert-danger");
+            Assert.Contains("passwords must have at least one lowercase ('a'-'z')", result.ToLower());
+        }
+
+        [Then(@"Recebe uma mensagem de erro de que a senha requer caracter especial")]
+        public void EntaoRecebeUmaMensagemDeErroDeQueASenhaRequerCaracterEspecial()
+        {
+            var result = Browser.ObterTextoElementoPorClasse("alert-danger");
+            Assert.Contains("passwords must have at least one non alphanumeric character", result.ToLower());
+        }
+
+        [Then(@"Recebe uma mensagem de erro de que a senha esta em tamanho inferior ao permitido")]
+        public void EntaoRecebeUmaMensagemDeErroDeQueASenhaEstaEmTamanhoInferiorAoPermitido()
+        {
+            var result = Browser.ObterTextoElementoPorClasse("text-danger");
+            Assert.Contains("a senha deve possuir no mínimo 6 caracteres", result.ToLower());
+        }
+
+        [Then(@"Recebe uma mensagem de erro de que a senha estao diferentes")]
+        public void EntaoRecebeUmaMensagemDeErroDeQueASenhaEstaoDiferentes()
+        {
+            var result = Browser.ObterTextoElementoPorClasse("text-danger");
+            Assert.Contains("as senhas não conferem", result.ToLower());
+        }
+
+        #endregion
     }
 }

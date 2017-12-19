@@ -10,11 +10,131 @@ Cenário: Cadastro de Organizador com Sucesso
 	Dado que o Organizador está no site, na página inicial
 	E clica no link de registro
 	E preenche os campos com os valores
-		| Campo            | Valor           |
-		| nome             | Elton Diego     |
-		| cpf              | 27960259267     |
-		| email            | elton@gmail.com |
-		| senha			   | Teste@123       |
-		| senhaConfirmacao | Teste@123       |
+		| Campo            | Valor				   |
+		| nome             | Elton Diego           |
+		| cpf              | 30390600822           |
+		| email            | eltongarbin@gmail.com |
+		| senha			   | Teste@123			   |
+		| senhaConfirmacao | Teste@123			   |
 	Quando clicar no botao registrar
 	Então Será registrado e redirecionado com sucesso
+
+@TesteAutomatizadoCadastroOrganizadorFalha
+
+Cenário: Cadastro de Organizador com CPF já utilizado
+	Dado que o Organizador está no site, na página inicial
+	E clica no link de registro
+	E preenche os campos com os valores
+		| Campo            | Valor					 |
+		| nome             | Elton Diego			 |
+		| cpf              | 30390600822			 |
+		| email            | eltongarbin12@gmail.com |
+		| senha            | Teste@123               |
+		| senhaConfirmacao | Teste@123               |
+	Quando clicar no botao registrar
+	Entao Recebe uma mensagem de erro de CPF já cadastrado
+
+@TesteAutomatizadoCadastroOrganizadorFalha
+
+Cenário: Cadastro de Organizador com Email já utilizado
+	Dado que o Organizador está no site, na página inicial
+	E clica no link de registro
+	E preenche os campos com os valores
+		| Campo            | Valor				   |
+		| nome             | Elton Diego		   |
+		| cpf              | 30390600821		   |
+		| email            | eltongarbin@gmail.com |
+		| senha            | Teste@123             |
+		| senhaConfirmacao | Teste@123             |
+	Quando clicar no botao registrar
+	Entao recebe uma mensagem de erro de email já cadastrado
+
+@TesteAutomatizadoCadastroOrganizadorFalha
+
+Cenário: Cadastro de Organizador com Senha sem números
+	Dado que o Organizador está no site, na página inicial
+	E clica no link de registro
+	E preenche os campos com os valores
+		| Campo            | Valor				   |
+		| nome             | Elton Diego		   |
+		| cpf              | 30390600822		   |
+		| email            | eltongarbin@gmail.com |
+		| senha            | Teste@                |
+		| senhaConfirmacao | Teste@                |
+	Quando clicar no botao registrar
+	Entao Recebe uma mensagem de erro de que a senha requer numero
+
+@TesteAutomatizadoCadastroOrganizadorFalha
+
+Cenário: Cadastro de Organizador com Senha sem Maiuscula
+	Dado que o Organizador está no site, na página inicial
+	E clica no link de registro
+	E preenche os campos com os valores
+		| Campo            | Valor				   |
+		| nome             | Elton Diego		   |
+		| cpf              | 30390600822		   |
+		| email            | eltongarbin@gmail.com |
+		| senha            | teste@123             |
+		| senhaConfirmacao | teste@123             |
+	Quando clicar no botao registrar
+	Entao Recebe uma mensagem de erro de que a senha requer letra maiuscula
+
+@TesteAutomatizadoCadastroOrganizadorFalha
+
+Cenário: Cadastro de Organizador com Senha sem minuscula
+	Dado que o Organizador está no site, na página inicial
+	E clica no link de registro
+	E preenche os campos com os valores
+		| Campo            | Valor				   |
+		| nome             | Elton Diego		   |
+		| cpf              | 30390600822		   |
+		| email            | eltongarbin@gmail.com |
+		| senha            | TESTE@123             |
+		| senhaConfirmacao | TESTE@123             |
+	Quando clicar no botao registrar		
+	Entao Recebe uma mensagem de erro de que a senha requer letra minuscula
+
+@TesteAutomatizadoCadastroOrganizadorFalha
+
+Cenário: Cadastro de Organizador com Senha sem caracter especial
+	Dado que o Organizador está no site, na página inicial
+	E clica no link de registro
+	E preenche os campos com os valores
+		| Campo            | Valor				   |
+		| nome             | Elton Diego		   |
+		| cpf              | 30390600822		   |
+		| email            | eltongarbin@gmail.com |
+		| senha            | Teste123              |
+		| senhaConfirmacao | Teste123              |
+	Quando clicar no botao registrar		
+	Entao Recebe uma mensagem de erro de que a senha requer caracter especial
+
+@TesteAutomatizadoCadastroOrganizadorFalha
+		
+Cenário: Cadastro de Organizador com Senha em tamanho inferior ao permitido
+	Dado que o Organizador está no site, na página inicial
+	E clica no link de registro
+	E preenche os campos com os valores
+		| Campo            | Valor				   |
+		| nome             | Elton Diego		   |
+		| cpf              | 30390600822		   |
+		| email            | eltongarbin@gmail.com |
+		| senha            | Te123                 |
+		| senhaConfirmacao | Te123                 |
+	Quando clicar no botao registrar
+	Entao Recebe uma mensagem de erro de que a senha esta em tamanho inferior ao permitido
+
+@TesteAutomatizadoCadastroOrganizadorFalha
+
+Cenário: Cadastro de Organizador com Senha diferentes
+	Dado que o Organizador está no site, na página inicial
+	E clica no link de registro
+	E preenche os campos com os valores
+		| Campo            | Valor                 |
+		| nome             | Elton Diego		   |
+		| cpf              | 30390600822		   |
+		| email            | eltongarbin@gmail.com |
+		| senha			   | Teste@123			   |
+		| senhaConfirmacao | Teste@124			   |
+	Quando clicar no botao registrar
+	Entao Recebe uma mensagem de erro de que a senha estao diferentes

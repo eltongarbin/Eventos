@@ -96,10 +96,10 @@ this.ScenarioSetup(scenarioInfo);
                         "Elton Diego"});
             table1.AddRow(new string[] {
                         "cpf",
-                        "27960259267"});
+                        "30390600822"});
             table1.AddRow(new string[] {
                         "email",
-                        "elton@gmail.com"});
+                        "eltongarbin@gmail.com"});
             table1.AddRow(new string[] {
                         "senha",
                         "Teste@123"});
@@ -112,6 +112,350 @@ this.ScenarioSetup(scenarioInfo);
  testRunner.When("clicar no botao registrar", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Quando ");
 #line 20
  testRunner.Then("Será registrado e redirecionado com sucesso", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Então ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.FactAttribute(DisplayName="Cadastro de Organizador com CPF já utilizado")]
+        [Xunit.TraitAttribute("FeatureTitle", "Cadastro de Organizador")]
+        [Xunit.TraitAttribute("Description", "Cadastro de Organizador com CPF já utilizado")]
+        [Xunit.TraitAttribute("Category", "TesteAutomatizadoCadastroOrganizadorFalha")]
+        public virtual void CadastroDeOrganizadorComCPFJaUtilizado()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Cadastro de Organizador com CPF já utilizado", new string[] {
+                        "TesteAutomatizadoCadastroOrganizadorFalha"});
+#line 24
+this.ScenarioSetup(scenarioInfo);
+#line 25
+ testRunner.Given("que o Organizador está no site, na página inicial", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Dado ");
+#line 26
+ testRunner.And("clica no link de registro", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "E ");
+#line hidden
+            TechTalk.SpecFlow.Table table2 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Campo",
+                        "Valor"});
+            table2.AddRow(new string[] {
+                        "nome",
+                        "Elton Diego"});
+            table2.AddRow(new string[] {
+                        "cpf",
+                        "30390600822"});
+            table2.AddRow(new string[] {
+                        "email",
+                        "eltongarbin12@gmail.com"});
+            table2.AddRow(new string[] {
+                        "senha",
+                        "Teste@123"});
+            table2.AddRow(new string[] {
+                        "senhaConfirmacao",
+                        "Teste@123"});
+#line 27
+ testRunner.And("preenche os campos com os valores", ((string)(null)), table2, "E ");
+#line 34
+ testRunner.When("clicar no botao registrar", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Quando ");
+#line 35
+ testRunner.Then("Recebe uma mensagem de erro de CPF já cadastrado", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Entao ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.FactAttribute(DisplayName="Cadastro de Organizador com Email já utilizado")]
+        [Xunit.TraitAttribute("FeatureTitle", "Cadastro de Organizador")]
+        [Xunit.TraitAttribute("Description", "Cadastro de Organizador com Email já utilizado")]
+        [Xunit.TraitAttribute("Category", "TesteAutomatizadoCadastroOrganizadorFalha")]
+        public virtual void CadastroDeOrganizadorComEmailJaUtilizado()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Cadastro de Organizador com Email já utilizado", new string[] {
+                        "TesteAutomatizadoCadastroOrganizadorFalha"});
+#line 39
+this.ScenarioSetup(scenarioInfo);
+#line 40
+ testRunner.Given("que o Organizador está no site, na página inicial", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Dado ");
+#line 41
+ testRunner.And("clica no link de registro", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "E ");
+#line hidden
+            TechTalk.SpecFlow.Table table3 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Campo",
+                        "Valor"});
+            table3.AddRow(new string[] {
+                        "nome",
+                        "Elton Diego"});
+            table3.AddRow(new string[] {
+                        "cpf",
+                        "30390600821"});
+            table3.AddRow(new string[] {
+                        "email",
+                        "eltongarbin@gmail.com"});
+            table3.AddRow(new string[] {
+                        "senha",
+                        "Teste@123"});
+            table3.AddRow(new string[] {
+                        "senhaConfirmacao",
+                        "Teste@123"});
+#line 42
+ testRunner.And("preenche os campos com os valores", ((string)(null)), table3, "E ");
+#line 49
+ testRunner.When("clicar no botao registrar", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Quando ");
+#line 50
+ testRunner.Then("recebe uma mensagem de erro de email já cadastrado", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Entao ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.FactAttribute(DisplayName="Cadastro de Organizador com Senha sem números")]
+        [Xunit.TraitAttribute("FeatureTitle", "Cadastro de Organizador")]
+        [Xunit.TraitAttribute("Description", "Cadastro de Organizador com Senha sem números")]
+        [Xunit.TraitAttribute("Category", "TesteAutomatizadoCadastroOrganizadorFalha")]
+        public virtual void CadastroDeOrganizadorComSenhaSemNumeros()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Cadastro de Organizador com Senha sem números", new string[] {
+                        "TesteAutomatizadoCadastroOrganizadorFalha"});
+#line 54
+this.ScenarioSetup(scenarioInfo);
+#line 55
+ testRunner.Given("que o Organizador está no site, na página inicial", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Dado ");
+#line 56
+ testRunner.And("clica no link de registro", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "E ");
+#line hidden
+            TechTalk.SpecFlow.Table table4 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Campo",
+                        "Valor"});
+            table4.AddRow(new string[] {
+                        "nome",
+                        "Elton Diego"});
+            table4.AddRow(new string[] {
+                        "cpf",
+                        "30390600822"});
+            table4.AddRow(new string[] {
+                        "email",
+                        "eltongarbin@gmail.com"});
+            table4.AddRow(new string[] {
+                        "senha",
+                        "Teste@"});
+            table4.AddRow(new string[] {
+                        "senhaConfirmacao",
+                        "Teste@"});
+#line 57
+ testRunner.And("preenche os campos com os valores", ((string)(null)), table4, "E ");
+#line 64
+ testRunner.When("clicar no botao registrar", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Quando ");
+#line 65
+ testRunner.Then("Recebe uma mensagem de erro de que a senha requer numero", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Entao ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.FactAttribute(DisplayName="Cadastro de Organizador com Senha sem Maiuscula")]
+        [Xunit.TraitAttribute("FeatureTitle", "Cadastro de Organizador")]
+        [Xunit.TraitAttribute("Description", "Cadastro de Organizador com Senha sem Maiuscula")]
+        [Xunit.TraitAttribute("Category", "TesteAutomatizadoCadastroOrganizadorFalha")]
+        public virtual void CadastroDeOrganizadorComSenhaSemMaiuscula()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Cadastro de Organizador com Senha sem Maiuscula", new string[] {
+                        "TesteAutomatizadoCadastroOrganizadorFalha"});
+#line 69
+this.ScenarioSetup(scenarioInfo);
+#line 70
+ testRunner.Given("que o Organizador está no site, na página inicial", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Dado ");
+#line 71
+ testRunner.And("clica no link de registro", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "E ");
+#line hidden
+            TechTalk.SpecFlow.Table table5 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Campo",
+                        "Valor"});
+            table5.AddRow(new string[] {
+                        "nome",
+                        "Elton Diego"});
+            table5.AddRow(new string[] {
+                        "cpf",
+                        "30390600822"});
+            table5.AddRow(new string[] {
+                        "email",
+                        "eltongarbin@gmail.com"});
+            table5.AddRow(new string[] {
+                        "senha",
+                        "teste@123"});
+            table5.AddRow(new string[] {
+                        "senhaConfirmacao",
+                        "teste@123"});
+#line 72
+ testRunner.And("preenche os campos com os valores", ((string)(null)), table5, "E ");
+#line 79
+ testRunner.When("clicar no botao registrar", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Quando ");
+#line 80
+ testRunner.Then("Recebe uma mensagem de erro de que a senha requer letra maiuscula", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Entao ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.FactAttribute(DisplayName="Cadastro de Organizador com Senha sem minuscula")]
+        [Xunit.TraitAttribute("FeatureTitle", "Cadastro de Organizador")]
+        [Xunit.TraitAttribute("Description", "Cadastro de Organizador com Senha sem minuscula")]
+        [Xunit.TraitAttribute("Category", "TesteAutomatizadoCadastroOrganizadorFalha")]
+        public virtual void CadastroDeOrganizadorComSenhaSemMinuscula()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Cadastro de Organizador com Senha sem minuscula", new string[] {
+                        "TesteAutomatizadoCadastroOrganizadorFalha"});
+#line 84
+this.ScenarioSetup(scenarioInfo);
+#line 85
+ testRunner.Given("que o Organizador está no site, na página inicial", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Dado ");
+#line 86
+ testRunner.And("clica no link de registro", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "E ");
+#line hidden
+            TechTalk.SpecFlow.Table table6 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Campo",
+                        "Valor"});
+            table6.AddRow(new string[] {
+                        "nome",
+                        "Elton Diego"});
+            table6.AddRow(new string[] {
+                        "cpf",
+                        "30390600822"});
+            table6.AddRow(new string[] {
+                        "email",
+                        "eltongarbin@gmail.com"});
+            table6.AddRow(new string[] {
+                        "senha",
+                        "TESTE@123"});
+            table6.AddRow(new string[] {
+                        "senhaConfirmacao",
+                        "TESTE@123"});
+#line 87
+ testRunner.And("preenche os campos com os valores", ((string)(null)), table6, "E ");
+#line 94
+ testRunner.When("clicar no botao registrar", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Quando ");
+#line 95
+ testRunner.Then("Recebe uma mensagem de erro de que a senha requer letra minuscula", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Entao ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.FactAttribute(DisplayName="Cadastro de Organizador com Senha sem caracter especial")]
+        [Xunit.TraitAttribute("FeatureTitle", "Cadastro de Organizador")]
+        [Xunit.TraitAttribute("Description", "Cadastro de Organizador com Senha sem caracter especial")]
+        [Xunit.TraitAttribute("Category", "TesteAutomatizadoCadastroOrganizadorFalha")]
+        public virtual void CadastroDeOrganizadorComSenhaSemCaracterEspecial()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Cadastro de Organizador com Senha sem caracter especial", new string[] {
+                        "TesteAutomatizadoCadastroOrganizadorFalha"});
+#line 99
+this.ScenarioSetup(scenarioInfo);
+#line 100
+ testRunner.Given("que o Organizador está no site, na página inicial", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Dado ");
+#line 101
+ testRunner.And("clica no link de registro", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "E ");
+#line hidden
+            TechTalk.SpecFlow.Table table7 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Campo",
+                        "Valor"});
+            table7.AddRow(new string[] {
+                        "nome",
+                        "Elton Diego"});
+            table7.AddRow(new string[] {
+                        "cpf",
+                        "30390600822"});
+            table7.AddRow(new string[] {
+                        "email",
+                        "eltongarbin@gmail.com"});
+            table7.AddRow(new string[] {
+                        "senha",
+                        "Teste123"});
+            table7.AddRow(new string[] {
+                        "senhaConfirmacao",
+                        "Teste123"});
+#line 102
+ testRunner.And("preenche os campos com os valores", ((string)(null)), table7, "E ");
+#line 109
+ testRunner.When("clicar no botao registrar", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Quando ");
+#line 110
+ testRunner.Then("Recebe uma mensagem de erro de que a senha requer caracter especial", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Entao ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.FactAttribute(DisplayName="Cadastro de Organizador com Senha em tamanho inferior ao permitido")]
+        [Xunit.TraitAttribute("FeatureTitle", "Cadastro de Organizador")]
+        [Xunit.TraitAttribute("Description", "Cadastro de Organizador com Senha em tamanho inferior ao permitido")]
+        [Xunit.TraitAttribute("Category", "TesteAutomatizadoCadastroOrganizadorFalha")]
+        public virtual void CadastroDeOrganizadorComSenhaEmTamanhoInferiorAoPermitido()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Cadastro de Organizador com Senha em tamanho inferior ao permitido", new string[] {
+                        "TesteAutomatizadoCadastroOrganizadorFalha"});
+#line 114
+this.ScenarioSetup(scenarioInfo);
+#line 115
+ testRunner.Given("que o Organizador está no site, na página inicial", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Dado ");
+#line 116
+ testRunner.And("clica no link de registro", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "E ");
+#line hidden
+            TechTalk.SpecFlow.Table table8 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Campo",
+                        "Valor"});
+            table8.AddRow(new string[] {
+                        "nome",
+                        "Elton Diego"});
+            table8.AddRow(new string[] {
+                        "cpf",
+                        "30390600822"});
+            table8.AddRow(new string[] {
+                        "email",
+                        "eltongarbin@gmail.com"});
+            table8.AddRow(new string[] {
+                        "senha",
+                        "Te123"});
+            table8.AddRow(new string[] {
+                        "senhaConfirmacao",
+                        "Te123"});
+#line 117
+ testRunner.And("preenche os campos com os valores", ((string)(null)), table8, "E ");
+#line 124
+ testRunner.When("clicar no botao registrar", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Quando ");
+#line 125
+ testRunner.Then("Recebe uma mensagem de erro de que a senha esta em tamanho inferior ao permitido", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Entao ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.FactAttribute(DisplayName="Cadastro de Organizador com Senha diferentes")]
+        [Xunit.TraitAttribute("FeatureTitle", "Cadastro de Organizador")]
+        [Xunit.TraitAttribute("Description", "Cadastro de Organizador com Senha diferentes")]
+        [Xunit.TraitAttribute("Category", "TesteAutomatizadoCadastroOrganizadorFalha")]
+        public virtual void CadastroDeOrganizadorComSenhaDiferentes()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Cadastro de Organizador com Senha diferentes", new string[] {
+                        "TesteAutomatizadoCadastroOrganizadorFalha"});
+#line 129
+this.ScenarioSetup(scenarioInfo);
+#line 130
+ testRunner.Given("que o Organizador está no site, na página inicial", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Dado ");
+#line 131
+ testRunner.And("clica no link de registro", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "E ");
+#line hidden
+            TechTalk.SpecFlow.Table table9 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Campo",
+                        "Valor"});
+            table9.AddRow(new string[] {
+                        "nome",
+                        "Elton Diego"});
+            table9.AddRow(new string[] {
+                        "cpf",
+                        "30390600822"});
+            table9.AddRow(new string[] {
+                        "email",
+                        "eltongarbin@gmail.com"});
+            table9.AddRow(new string[] {
+                        "senha",
+                        "Teste@123"});
+            table9.AddRow(new string[] {
+                        "senhaConfirmacao",
+                        "Teste@124"});
+#line 132
+ testRunner.And("preenche os campos com os valores", ((string)(null)), table9, "E ");
+#line 139
+ testRunner.When("clicar no botao registrar", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Quando ");
+#line 140
+ testRunner.Then("Recebe uma mensagem de erro de que a senha estao diferentes", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Entao ");
 #line hidden
             this.ScenarioCleanup();
         }

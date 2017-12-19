@@ -2,7 +2,6 @@
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.UI;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 
 namespace Eventos.IO.TestesAutomatizados.Config
@@ -40,13 +39,13 @@ namespace Eventos.IO.TestesAutomatizados.Config
             return CD.Url;
         }
 
-        public void ClicarLinkPorText(string linkText)
+        public void ClicarLinkPorTexto(string linkText)
         {
             var link = Wait.Until(ExpectedConditions.ElementIsVisible(By.LinkText(linkText)));
             link.Click();
         }
 
-        public void ClicarBottaoPorId(string botaoId)
+        public void ClicarBotaoPorId(string botaoId)
         {
             var botao = Wait.Until(ExpectedConditions.ElementIsVisible(By.Id(botaoId)));
             botao.Click();
@@ -92,7 +91,7 @@ namespace Eventos.IO.TestesAutomatizados.Config
             SalvarScreenShot(screenshot, string.Format("{0}_" + nome + ".png", DateTime.Now.ToFileTime()));
         }
 
-        private void SalvarScreenShot(Screenshot screenshot, string fileName)
+        private static void SalvarScreenShot(Screenshot screenshot, string fileName)
         {
             screenshot.SaveAsFile(string.Concat(ConfigurationHelper.FolderPicture, fileName), ScreenshotImageFormat.Png);
         }
