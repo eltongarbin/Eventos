@@ -70,6 +70,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CadastrarEvento\CadastroDeEvento.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CadastroDeEvento.feature</DependentUpon>
+    </Compile>
+    <Compile Include="CadastrarEvento\CadastroDeEventoSteps.cs" />
     <Compile Include="CadastroOrganizador\CadastroDeOrganizadorSteps.cs" />
     <Compile Include="CadastroOrganizador\CadastroDeOrganizador.feature.cs">
       <AutoGen>True</AutoGen>
@@ -78,11 +84,16 @@
     </Compile>
     <Compile Include="Config\ConfigurationHelper.cs" />
     <Compile Include="Config\SeleniumHelper.cs" />
+    <Compile Include="Login\LoginSteps.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">
       <SubType>Designer</SubType>
+    </None>
+    <None Include="CadastrarEvento\CadastroDeEvento.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>CadastroDeEvento.feature.cs</LastGenOutput>
     </None>
     <None Include="CadastroOrganizador\CadastroDeOrganizador.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
@@ -91,8 +102,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="CadastrarEvento\" />
-    <Folder Include="Login\" />
     <Folder Include="ScreenShots\" />
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
