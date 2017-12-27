@@ -1,0 +1,8 @@
+version: '3'
+
+services:
+  eventos.io.services.api:
+    image: eventos.io.services.api
+    build:
+      context: .
+      dockerfile: src/Eventos.IO.Services.Api/Dockerfile

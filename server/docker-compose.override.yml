@@ -1,0 +1,8 @@
+version: '3'
+
+services:
+  eventos.io.services.api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    ports:
+      - "8285:8285"
