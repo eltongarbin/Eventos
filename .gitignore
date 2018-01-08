@@ -1,1 +1,4 @@
 .vs
+.vscode/tasks.json
+.vscode/launch.json
+server/src/Eventos.IO.Services.Api/Properties/PublishProfiles/FolderProfile.pubxml
