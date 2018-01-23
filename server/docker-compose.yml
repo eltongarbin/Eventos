@@ -5,4 +5,4 @@ services:
     image: eventos.io.services.api
     build:
       context: .
-      dockerfile: src/Eventos.IO.Services.Api/Dockerfile
+      dockerfile: src/Eventos.IO.Services.Api/Dockerfile.dev

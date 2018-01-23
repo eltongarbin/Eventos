@@ -1,26 +1,22 @@
 version: '3'
 
 services:
-  client:
-    image: eventos.io.client
-    build: ./client
-    volumes:
-      - ./client:/app
   
   serverApi:
     image: eventos.io.services.api:prod
     build: 
-      context: ./server/src/Eventos.IO.Services.Api
+      context: ./server
       dockerfile: Dockerfile.prod
     environment: 
       - ASPNETCORE_ENVIRONMENT=Production
   
-  nginx:
-    image: eventos.io.proxy
-    build: ./nginx
+  client:
+    image: eventos.io.client:prod
+    build: 
+      context: ./client
+      dockerfile: Dockerfile.prod
     ports:
       - "80:80"
       - "8287:8286"
     links:
-      - client
       - serverApi

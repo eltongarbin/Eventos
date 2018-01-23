@@ -1,0 +1,30 @@
+version: '3'
+
+services:
+  client:
+    image: eventos.io.client:dev
+    build: 
+      context: ./client
+      dockerfile: Dockerfile.dev
+    volumes:
+      - ./client:/app
+  
+  serverApi:
+    image: eventos.io.services.api:dev
+    build: 
+      context: ./server/src/Eventos.IO.Services.Api
+      dockerfile: Dockerfile.dev
+    environment: 
+      - ASPNETCORE_ENVIRONMENT=Development
+  
+  nginx:
+    image: eventos.io.proxy:dev
+    build: 
+      context: ./nginx
+      dockerfile: Dockerfile.dev
+    ports:
+      - "80:80"
+      - "8287:8286"
+    links:
+      - client
+      - serverApi

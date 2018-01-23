@@ -1,0 +1,17 @@
+### Multi Stage Build ###
+
+### Estágio 1 - Obter o source e gerar o build ###
+FROM node:latest AS ng-builder
+RUN mkdir -p /app
+WORKDIR /app
+COPY package.json/app
+RUN npm install
+COPY . /app
+RUN $(npm bin)/ng build --prod
+
+### Multi Stage Build ###
+FROM nginx
+COPY nginx.prod.conf /etc/nginx/nginx.conf
+
+COPY --from=ng-builder /app/dist /usr/share/nginx/html
+EXPOSE 80
