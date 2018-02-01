@@ -44,6 +44,10 @@ export class DetalhesEventoComponent implements OnInit {
   }
 
   public EnderecoCompleto(): string {
+    if(this.evento.online){
+      return "";
+    }
+
     return this.evento.endereco.logradouro + ", " + this.evento.endereco.numero + " - " + this.evento.endereco.bairro + ", " + this.evento.endereco.cidade + " - " + this.evento.endereco.estado;
   }
 }

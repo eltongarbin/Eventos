@@ -4,12 +4,12 @@
 FROM node:latest AS ng-builder
 RUN mkdir -p /app
 WORKDIR /app
-COPY package.json/app
+COPY package.json /app
 RUN npm install
 COPY . /app
 RUN $(npm bin)/ng build --prod
 
-### Multi Stage Build ###
+### Estágio 2 - Subir o source para o servidor NGINX com a app Angular ###
 FROM nginx
 COPY nginx.prod.conf /etc/nginx/nginx.conf
 

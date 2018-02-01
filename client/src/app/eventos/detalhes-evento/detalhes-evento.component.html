@@ -34,7 +34,8 @@
       <div class="row">
         <b>Onde?</b>
         <br />
-        <iframe width="600" height="450" frameborder="0" style="border:0" [src]="enderecoMap" allowfullscreen></iframe>
+        <iframe *ngIf='!evento.online' width="600" height="450" frameborder="0" style="border:0" [src]="enderecoMap" allowfullscreen></iframe>
+        <p *ngIf='evento.online'>Online</p>
       </div>
     </div>
   </div>

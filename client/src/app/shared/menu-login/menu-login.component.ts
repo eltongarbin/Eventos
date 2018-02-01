@@ -15,7 +15,6 @@ export class MenuLoginComponent implements OnInit {
     this.user = JSON.parse(localStorage.getItem('eio.user'));
   }
 
-
   ngOnInit() {
     if (this.user)
       this.nome = this.user.nome;
