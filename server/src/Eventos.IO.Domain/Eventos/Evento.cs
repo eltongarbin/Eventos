@@ -22,6 +22,7 @@ namespace Eventos.IO.Domain.Eventos
         public Guid? EnderecoId { get; private set; }
         public Guid OrganizadorId { get; private set; }
 
+        // EF propriedades de navegacao
         public virtual Categoria Categoria { get; private set; }
         public virtual Endereco Endereco { get; private set; }
         public virtual Organizador Organizador { get; private set; }
@@ -66,6 +67,12 @@ namespace Eventos.IO.Domain.Eventos
             Excluido = true;
         }
 
+        public void TornarPresencial()
+        {
+            // Alguma validacao de negocio?
+            Online = false;
+        }
+
         public override bool EhValido()
         {
             Validar();
@@ -82,7 +89,7 @@ namespace Eventos.IO.Domain.Eventos
             ValidarNomeEmpresa();
             ValidationResult = Validate(this);
 
-            // Validações adicionais
+            // Validacoes adicionais 
             ValidarEndereco();
         }
 

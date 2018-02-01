@@ -21,7 +21,7 @@ namespace Eventos.IO.Tests.Api.IntegrationTests
             var response = await client.PostAsync("api/v1/conta", postContent);
 
             var postResult = await response.Content.ReadAsStringAsync();
-            var userResult = JsonConvert.DeserializeObject<UsuarioJsonDTO>(postResult);
+            var userResult = JsonConvert.DeserializeObject<UserReturnJson>(postResult);
 
             return userResult.data.result;
         }

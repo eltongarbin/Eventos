@@ -73,8 +73,6 @@ namespace Eventos.IO.TestesAutomatizados.CadastrarEvento
         }
         
         [Xunit.FactAttribute(DisplayName="Registro de Novo Evento")]
-        [Xunit.TraitAttribute("FeatureTitle", "Adicionar novo Evento")]
-        [Xunit.TraitAttribute("Description", "Registro de Novo Evento")]
         [Xunit.TraitAttribute("Category", "TesteAutomatizadoCadastroNovoEvento")]
         public virtual void RegistroDeNovoEvento()
         {

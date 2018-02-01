@@ -1,13 +1,11 @@
-﻿<Project Sdk="Microsoft.NET.Sdk"> 
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>netcoreapp2.0</TargetFramework>
   </PropertyGroup>
-  
   <ItemGroup>
-    <PackageReference Include="FluentValidation" Version="7.3.1" />
+    <PackageReference Include="FluentValidation" Version="7.4.0" />
     <PackageReference Include="System.Security.Claims" Version="4.3.0" />
   </ItemGroup>
-
   <ItemGroup>
     <ProjectReference Include="..\Eventos.IO.Domain.Core\Eventos.IO.Domain.Core.csproj" />
   </ItemGroup>

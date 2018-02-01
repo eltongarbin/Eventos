@@ -1,6 +1,8 @@
-﻿namespace Eventos.IO.Tests.Api.IntegrationTests.DTO
+﻿using System;
+
+namespace Eventos.IO.Tests.Api.IntegrationTests.DTO
 {
-    public class UsuarioJsonDTO
+    public class UserReturnJson
     {
         public bool success { get; set; }
         public Data data { get; set; }
@@ -14,6 +16,7 @@
         public int status { get; set; }
         public bool isCanceled { get; set; }
         public bool isCompleted { get; set; }
+        public bool isCompletedSuccessfully { get; set; }
         public int creationOptions { get; set; }
         public object asyncState { get; set; }
         public bool isFaulted { get; set; }
@@ -22,7 +25,7 @@
     public class Result
     {
         public string access_token { get; set; }
-        public int expires_in { get; set; }
+        public DateTime expires_in { get; set; }
         public User user { get; set; }
     }
 

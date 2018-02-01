@@ -19,8 +19,8 @@ namespace Eventos.IO.TestesAutomatizados.CadastrarEvento
         [Given(@"que o Organizador está no site")]
         public void DadoQueOOrganizadorEstaNoSite()
         {
-            var url = Browser.NavegarParaUrl(ConfigurationHelper.SiteUrl);
-            Assert.Equal(ConfigurationHelper.SiteUrl, url);
+            var url = Browser.NavegarParaUrl(ConfigurationHelper.HomeUrl);
+            Assert.Equal(ConfigurationHelper.HomeUrl, url);
         }
 
         [Given(@"Realiza o Login")]

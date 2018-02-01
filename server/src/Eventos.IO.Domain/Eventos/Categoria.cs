@@ -8,13 +8,15 @@ namespace Eventos.IO.Domain.Eventos
     {
         public string Nome { get; private set; }
 
-        public ICollection<Evento> Eventos { get; set; }
+        // EF Propriedade de Navegação
+        public virtual ICollection<Evento> Eventos { get; set; }
 
         public Categoria(Guid id)
         {
             Id = id;
         }
 
+        // Construtor para o EF
         protected Categoria() { }
 
         public override bool EhValido()

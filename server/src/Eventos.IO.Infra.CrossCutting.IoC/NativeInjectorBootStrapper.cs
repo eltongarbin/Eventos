@@ -30,12 +30,12 @@ namespace Eventos.IO.Infra.CrossCutting.IoC
             services.AddScoped<IMediatorHandler, MediatorHandler>();
 
             // Commands
-            services.AddScoped<INotificationHandler<RegistrarEventoCommand>, EventoCommandHandler>();
-            services.AddScoped<INotificationHandler<AtualizarEventoCommand>, EventoCommandHandler>();
-            services.AddScoped<INotificationHandler<ExcluirEventoCommand>, EventoCommandHandler>();
-            services.AddScoped<INotificationHandler<IncluirEnderecoEventoCommand>, EventoCommandHandler>();
-            services.AddScoped<INotificationHandler<AtualizarEnderecoEventoCommand>, EventoCommandHandler>();
-            services.AddScoped<INotificationHandler<RegistrarOrganizadorCommand>, OrganizadorCommandHandler>();
+            services.AddScoped<IRequestHandler<RegistrarEventoCommand>, EventoCommandHandler>();
+            services.AddScoped<IRequestHandler<AtualizarEventoCommand>, EventoCommandHandler>();
+            services.AddScoped<IRequestHandler<ExcluirEventoCommand>, EventoCommandHandler>();
+            services.AddScoped<IRequestHandler<IncluirEnderecoEventoCommand>, EventoCommandHandler>();
+            services.AddScoped<IRequestHandler<AtualizarEnderecoEventoCommand>, EventoCommandHandler>();
+            services.AddScoped<IRequestHandler<RegistrarOrganizadorCommand>, OrganizadorCommandHandler>();
 
             // Eventos
             services.AddScoped<INotificationHandler<DomainNotification>, DomainNotificationHandler>();

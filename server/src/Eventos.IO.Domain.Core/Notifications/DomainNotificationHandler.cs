@@ -2,6 +2,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Eventos.IO.Domain.Core.Notifications
 {
@@ -19,11 +21,13 @@ namespace Eventos.IO.Domain.Core.Notifications
             return _notifications;
         }
 
-        public void Handle(DomainNotification message)
+        public Task Handle(DomainNotification message, CancellationToken cancellationToken)
         {
             _notifications.Add(message);
             Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine($"Erro: {message.Key} - {message.Value}");
+
+            return Task.CompletedTask;
         }
 
         public virtual bool HasNotifications()

@@ -2,7 +2,7 @@
 
 namespace Eventos.IO.Tests.Api.IntegrationTests.DTO
 {
-    public class EventoJsonDTO
+    public class EventoReturnJson
     {
         public bool success { get; set; }
         public EventoDTO data { get; set; }

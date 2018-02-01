@@ -1,19 +1,21 @@
-﻿using Eventos.IO.Domain.Core.Notifications;
+﻿using System;
+using System.Threading;
+using System.Threading.Tasks;
+using Eventos.IO.Domain.Core.Notifications;
 using Eventos.IO.Domain.Eventos.Events;
 using Eventos.IO.Domain.Eventos.Repository;
 using Eventos.IO.Domain.Handlers;
 using Eventos.IO.Domain.Interfaces;
 using MediatR;
-using System;
 
 namespace Eventos.IO.Domain.Eventos.Commands
 {
     public class EventoCommandHandler : CommandHandler,
-        INotificationHandler<RegistrarEventoCommand>,
-        INotificationHandler<AtualizarEventoCommand>,
-        INotificationHandler<ExcluirEventoCommand>,
-        INotificationHandler<IncluirEnderecoEventoCommand>,
-        INotificationHandler<AtualizarEnderecoEventoCommand>
+        IRequestHandler<RegistrarEventoCommand>,
+        IRequestHandler<AtualizarEventoCommand>,
+        IRequestHandler<ExcluirEventoCommand>,
+        IRequestHandler<IncluirEnderecoEventoCommand>,
+        IRequestHandler<AtualizarEnderecoEventoCommand>
     {
         private readonly IEventoRepository _eventoRepository;
         private readonly IMediatorHandler _mediator;
@@ -31,7 +33,7 @@ namespace Eventos.IO.Domain.Eventos.Commands
             _user = user;
         }
 
-        public void Handle(RegistrarEventoCommand message)
+        public Task Handle(RegistrarEventoCommand message, CancellationToken cancellationToken)
         {
             var endereco = new Endereco(message.Endereco.Id,
                                         message.Endereco.Logradouro,
@@ -57,10 +59,10 @@ namespace Eventos.IO.Domain.Eventos.Commands
                                                                  endereco,
                                                                  message.CategoriaId);
 
-            if (!EventoValido(evento)) return;
+            if (!EventoValido(evento)) return Task.CompletedTask;
 
             // TODO:
-            // Validações de negócio!
+            // Validacoes de negocio!
             // Organizador pode registrar evento?
 
             _eventoRepository.Adicionar(evento);
@@ -68,27 +70,28 @@ namespace Eventos.IO.Domain.Eventos.Commands
             if (Commit())
             {
                 _mediator.PublicarEvento(new EventoRegistradoEvent(evento.Id,
-                                                          evento.Nome,
-                                                          evento.DataInicio,
-                                                          evento.DataFim,
-                                                          evento.Gratuito,
-                                                          evento.Valor,
-                                                          evento.Online,
-                                                          evento.NomeEmpresa));
+                                                                   evento.Nome,
+                                                                   evento.DataInicio,
+                                                                   evento.DataFim,
+                                                                   evento.Gratuito,
+                                                                   evento.Valor,
+                                                                   evento.Online,
+                                                                   evento.NomeEmpresa));
             }
+
+            return Task.CompletedTask;
         }
 
-        public void Handle(AtualizarEventoCommand message)
+        public Task Handle(AtualizarEventoCommand message, CancellationToken cancellationToken)
         {
             var eventoAtual = _eventoRepository.ObterPorId(message.Id);
 
-            if (!EventoExistente(message.Id, message.MessageType))
-                return;
-
+            if (!EventoExistente(message.Id, message.MessageType)) 
+                return Task.CompletedTask;
             if (eventoAtual.OrganizadorId != _user.GetUserId())
             {
                 _mediator.PublicarEvento(new DomainNotification(message.MessageType, "Evento não pertencente ao Organizador"));
-                return;
+                return Task.CompletedTask;
             }
 
             var evento = Evento.EventoFactory.NovoEventoCompleto(message.Id,
@@ -108,39 +111,41 @@ namespace Eventos.IO.Domain.Eventos.Commands
             if (!evento.Online && evento.Endereco == null)
             {
                 _mediator.PublicarEvento(new DomainNotification(message.MessageType, "Não é possível atualizar um evento sem informar o endereço."));
-                return;
+                return Task.CompletedTask;
             }
 
             if (!EventoValido(evento))
-                return;
+                return Task.CompletedTask;
 
             _eventoRepository.Atualizar(evento);
 
             if (Commit())
             {
                 _mediator.PublicarEvento(new EventoAtualizadoEvent(evento.Id,
-                                                          evento.Nome,
-                                                          evento.DescricaoCurta,
-                                                          evento.DescricaoLonga,
-                                                          evento.DataInicio,
-                                                          evento.DataFim,
-                                                          evento.Gratuito,
-                                                          evento.Valor,
-                                                          evento.Online,
-                                                          evento.NomeEmpresa));
+                                                                   evento.Nome,
+                                                                   evento.DescricaoCurta,
+                                                                   evento.DescricaoLonga,
+                                                                   evento.DataInicio,
+                                                                   evento.DataFim,
+                                                                   evento.Gratuito,
+                                                                   evento.Valor,
+                                                                   evento.Online,
+                                                                   evento.NomeEmpresa));
             }
+
+            return Task.CompletedTask;
         }
 
-        public void Handle(ExcluirEventoCommand message)
+        public Task Handle(ExcluirEventoCommand message, CancellationToken cancellationToken)
         {
             if (!EventoExistente(message.Id, message.MessageType))
-                return;
+                return Task.CompletedTask;
 
             var eventoAtual = _eventoRepository.ObterPorId(message.Id);
             if (eventoAtual.OrganizadorId != _user.GetUserId())
             {
                 _mediator.PublicarEvento(new DomainNotification(message.MessageType, "Evento não pertencente ao Organizador"));
-                return;
+                return Task.CompletedTask;
             }
 
             // Validacoes de negocio
@@ -150,6 +155,8 @@ namespace Eventos.IO.Domain.Eventos.Commands
 
             if (Commit())
                 _mediator.PublicarEvento(new EventoExcluidoEvent(message.Id));
+
+            return Task.CompletedTask;
         }
 
         private bool EventoValido(Evento evento)
@@ -172,7 +179,7 @@ namespace Eventos.IO.Domain.Eventos.Commands
             return false;
         }
 
-        public void Handle(IncluirEnderecoEventoCommand message)
+        public Task Handle(IncluirEnderecoEventoCommand message, CancellationToken cancellationToken)
         {
             var endereco = new Endereco(message.Id,
                                         message.Logradouro,
@@ -186,26 +193,32 @@ namespace Eventos.IO.Domain.Eventos.Commands
             if (!endereco.EhValido())
             {
                 NotificarValidacoesErro(endereco.ValidationResult);
-                return;
+                return Task.CompletedTask;
             }
 
+            var evento = _eventoRepository.ObterPorId(message.EventoId.Value);
+            evento.TornarPresencial();
+
+            _eventoRepository.Atualizar(evento);
             _eventoRepository.AdicionarEndereco(endereco);
 
             if (Commit())
             {
                 _mediator.PublicarEvento(new EnderecoEventoAdicionadoEvent(endereco.Id,
-                                                                  endereco.Logradouro,
-                                                                  endereco.Numero,
-                                                                  endereco.Complemento,
-                                                                  endereco.Bairro,
-                                                                  endereco.CEP,
-                                                                  endereco.Cidade,
-                                                                  endereco.Estado,
-                                                                  endereco.EventoId.Value));
+                                                                           endereco.Logradouro,
+                                                                           endereco.Numero,
+                                                                           endereco.Complemento,
+                                                                           endereco.Bairro,
+                                                                           endereco.CEP,
+                                                                           endereco.Cidade,
+                                                                           endereco.Estado,
+                                                                           endereco.EventoId.Value));
             }
+
+            return Task.CompletedTask;
         }
 
-        public void Handle(AtualizarEnderecoEventoCommand message)
+        public Task Handle(AtualizarEnderecoEventoCommand message, CancellationToken cancellationToken)
         {
             var endereco = new Endereco(message.Id,
                                         message.Logradouro,
@@ -219,7 +232,7 @@ namespace Eventos.IO.Domain.Eventos.Commands
             if (!endereco.EhValido())
             {
                 NotificarValidacoesErro(endereco.ValidationResult);
-                return;
+                return Task.CompletedTask;
             }
 
             _eventoRepository.AtualizarEndereco(endereco);
@@ -227,15 +240,17 @@ namespace Eventos.IO.Domain.Eventos.Commands
             if (Commit())
             {
                 _mediator.PublicarEvento(new EnderecoEventoAtualizadoEvent(endereco.Id,
-                                                                  endereco.Logradouro,
-                                                                  endereco.Numero,
-                                                                  endereco.Complemento,
-                                                                  endereco.Bairro,
-                                                                  endereco.CEP,
-                                                                  endereco.Cidade,
-                                                                  endereco.Estado,
-                                                                  endereco.EventoId.Value));
+                                                                           endereco.Logradouro,
+                                                                           endereco.Numero,
+                                                                           endereco.Complemento,
+                                                                           endereco.Bairro,
+                                                                           endereco.CEP,
+                                                                           endereco.Cidade,
+                                                                           endereco.Estado,
+                                                                           endereco.EventoId.Value));
             }
+
+            return Task.CompletedTask;
         }
     }
 }

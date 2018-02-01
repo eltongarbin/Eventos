@@ -43,7 +43,6 @@ namespace Eventos.IO.Services.Api.Controllers
         {
             _userManager = userManager;
             _signInManager = signInManager;
-            _mediator = mediator;
             _organizadorRepository = organizadorRepository;
             _mediator = mediator;
             _logger = loggerFactory.CreateLogger<AccountController>();

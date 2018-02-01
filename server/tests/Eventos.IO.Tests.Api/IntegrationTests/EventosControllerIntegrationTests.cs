@@ -16,39 +16,8 @@ namespace Eventos.IO.Tests.Api.IntegrationTests
             Environment.CriarServidor();
         }
 
-        [Fact]
-        public async Task EventosController_ObterListaEventos_RetornarJsonComSucesso()
-        {
-            // Arrange & Act
-            var response = await Environment.Client.GetAsync("api/v1/eventos");
-            var responseEvento = await response.Content.ReadAsStringAsync();
-
-            // Assert
-            response.EnsureSuccessStatusCode();
-            Assert.NotEmpty(responseEvento);
-        }
-
-        [Fact]
-        public async Task EventosController_ObterListaMeusEventos_RetornarJsonComSucesso()
-        {
-            // Arrange
-            var user = await UserUtils.RealizarLoginOrganizador(Environment.Client);
-
-            // Act
-            var response = await Environment.Server
-                .CreateRequest("api/v1/eventos/meus-eventos")
-                .AddHeader("Content-Type", "application/json")
-                .AddHeader("Authorization", string.Concat("Bearer ", user.access_token))
-                .GetAsync();
-
-            var responseEvento = await response.Content.ReadAsStringAsync();
-
-            // Assert
-            response.EnsureSuccessStatusCode();
-            Assert.NotEmpty(responseEvento);
-        }
-
-        [Fact]
+        [Fact(DisplayName = "Evento registrado com sucesso")]
+        [Trait("Category", "Testes de integração API")]
         public async Task EventosController_RegistrarNovoEvento_RetornarComSucesso()
         {
             // Arrange
@@ -73,13 +42,13 @@ namespace Eventos.IO.Tests.Api.IntegrationTests
             var response = await Environment.Server
                 .CreateRequest("api/v1/eventos")
                 .AddHeader("Authorization", string.Concat("Bearer ", login.access_token))
-                .And(request => request.Content = new StringContent(JsonConvert.SerializeObject(evento), 
+                .And(request => request.Content = new StringContent(JsonConvert.SerializeObject(evento),
                                                                     Encoding.UTF8,
                                                                     "application/json"))
                 // .And(request => request.Method = HttpMethod.Put)
                 .PostAsync();
 
-            var eventoResult = JsonConvert.DeserializeObject<EventoJsonDTO>(await response.Content.ReadAsStringAsync());
+            var eventoResult = JsonConvert.DeserializeObject<EventoReturnJson>(await response.Content.ReadAsStringAsync());
 
             // Assert
             response.EnsureSuccessStatusCode();

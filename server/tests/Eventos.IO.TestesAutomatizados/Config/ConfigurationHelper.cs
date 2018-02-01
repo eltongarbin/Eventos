@@ -6,6 +6,7 @@ namespace Eventos.IO.TestesAutomatizados.Config
     public class ConfigurationHelper
     {
         public static string SiteUrl => ConfigurationManager.AppSettings["SiteUrl"];
+        public static string HomeUrl => ConfigurationManager.AppSettings["HomeUrl"];
         public static string RegisterUrl => string.Concat(SiteUrl, ConfigurationManager.AppSettings["RegisterUrl"]);
         public static string LoginUrl => string.Concat(SiteUrl, ConfigurationManager.AppSettings["LoginUrl"]);
         public static string ChromeDrive => ConfigurationManager.AppSettings["ChromeDrive"];

@@ -35,16 +35,23 @@ namespace Eventos.IO.Services.Api
 
         public void ConfigureServices(IServiceCollection services)
         {
+            // Contexto do EF para o Identity
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
+            // Configurações de Autenticação, Autorização e JWT.
             services.AddMvcSecurity(Configuration);
+
+            // Opções para configurações customizadas
             services.AddOptions();
+
+            // MVC com restrição de XML e adição de filtro de ações.
             services.AddMvc(options =>
             {
                 options.OutputFormatters.Remove(new XmlDataContractSerializerOutputFormatter());
                 options.Filters.Add(new ServiceFilterAttribute(typeof(GlobalActionLogger)));
             });
+
             services.AddApiVersioning("api/v{version}");
 
             // AutoMapper
@@ -53,6 +60,8 @@ namespace Eventos.IO.Services.Api
             services.AddAutoMapper(assembly);
 
             services.AddMediatR(typeof(Startup));
+
+            // Registrar todos os DI
             services.AddDIConfiguration();
         }
 

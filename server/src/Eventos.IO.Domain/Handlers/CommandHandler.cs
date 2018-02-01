@@ -30,11 +30,8 @@ namespace Eventos.IO.Domain.Handlers
 
         protected bool Commit()
         {
-            if (_notifications.HasNotifications())
-                return false;
-
-            if (_uow.Commit())
-                return true;
+            if (_notifications.HasNotifications()) return false;
+            if (_uow.Commit()) return true;
 
             _mediator.PublicarEvento(new DomainNotification("Commit", "Ocorreu um erro ao salvar os dados no banco"));
             return false;

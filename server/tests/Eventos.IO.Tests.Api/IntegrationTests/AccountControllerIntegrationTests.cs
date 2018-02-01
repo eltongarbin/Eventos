@@ -1,9 +1,13 @@
-﻿using Eventos.IO.Infra.CrossCutting.Identity.Models.AccountViewModels;
-using Eventos.IO.Tests.Api.IntegrationTests.DTO;
-using Newtonsoft.Json;
+﻿using System.Globalization;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using Bogus;
+using Bogus.DataSets;
+using Bogus.Extensions.Brazil;
+using Eventos.IO.Infra.CrossCutting.Identity.Models.AccountViewModels;
+using Eventos.IO.Tests.Api.IntegrationTests.DTO;
+using Newtonsoft.Json;
 using Xunit;
 
 namespace Eventos.IO.Tests.Api.IntegrationTests
@@ -15,29 +19,48 @@ namespace Eventos.IO.Tests.Api.IntegrationTests
             Environment.CriarServidor();
         }
 
-        [Fact]
+        [Fact(DisplayName = "Registrar organizador com sucesso")]
+        [Trait("Category", "Testes de integração API")]
         public async Task AccountController_RegistrarNovoOrganizador_RetornarComSucesso()
         {
-            // Arrange
-            var user = new RegisterViewModel
-            {
-                Nome = "Elton Diego",
-                CPF = "27960259267",
-                Email = "elton@gmail.com",
-                Senha = "Teste@123",
-                SenhaConfirmacao = "Teste@123"
-            };
+            // Arrange 
+            var userFaker = new Faker<RegisterViewModel>("pt_BR")
+                .RuleFor(r => r.Nome, c => c.Name.FullName(Name.Gender.Male))
+                .RuleFor(r => r.CPF, c => c.Person.Cpf().Replace(".", "").Replace("-", ""))
+                // remoção de acento no email
+                .RuleFor(r => r.Email, (c, r) => RemoverAcentos(c.Internet.Email(r.Nome).ToLower()));
+
+            var user = userFaker.Generate();
+            user.Senha = "Teste@123";
+            user.SenhaConfirmacao = "Teste@123";
 
             var postContent = new StringContent(JsonConvert.SerializeObject(user), Encoding.UTF8, "application/json");
 
-            // Act
+            // Act 
             var response = await Environment.Client.PostAsync("api/v1/nova-conta", postContent);
-            var userResult = JsonConvert.DeserializeObject<UsuarioJsonDTO>(await response.Content.ReadAsStringAsync());
+            var userResult = JsonConvert.DeserializeObject<UserReturnJson>(await response.Content.ReadAsStringAsync());
+            var token = userResult.data.result.access_token;
 
             // Assert
             response.EnsureSuccessStatusCode();
-            var token = userResult.data.result.access_token;
             Assert.NotEmpty(token);
+        }
+
+        private static string RemoverAcentos(string text)
+        {
+            var normalizedString = text.Normalize(NormalizationForm.FormD);
+            var stringBuilder = new StringBuilder();
+
+            foreach (var c in normalizedString)
+            {
+                var unicodeCategory = CharUnicodeInfo.GetUnicodeCategory(c);
+                if (unicodeCategory != UnicodeCategory.NonSpacingMark)
+                {
+                    stringBuilder.Append(c);
+                }
+            }
+
+            return stringBuilder.ToString().Normalize(NormalizationForm.FormC);
         }
     }
 }

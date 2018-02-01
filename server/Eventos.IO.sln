@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27130.2010
+VisualStudioVersion = 15.0.27130.2027
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2 - Domain", "2 - Domain", "{6FFF3178-93F2-45FB-B804-E006CA8C78B0}"
 EndProject
@@ -11,11 +11,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Eventos.IO.Domain.Core", "s
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3 - Infra", "3 - Infra", "{CAA0F25B-65D8-432A-B35D-57996F65878E}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "5.1 - Data", "5.1 - Data", "{1008CCDD-9DD1-4552-8148-9A480DBEC53E}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3.1 - Data", "3.1 - Data", "{1008CCDD-9DD1-4552-8148-9A480DBEC53E}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Eventos.IO.Infra.Data", "src\Eventos.IO.Infra.Data\Eventos.IO.Infra.Data.csproj", "{E2E79FD4-F561-47E9-8AD4-624A2484021E}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "5.2 - CrossCutting", "5.2 - CrossCutting", "{D40154D2-580D-4B1D-A3F4-12E6D21116D3}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3.2 - CrossCutting", "3.2 - CrossCutting", "{D40154D2-580D-4B1D-A3F4-12E6D21116D3}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Eventos.IO.Infra.CrossCutting.IoC", "src\Eventos.IO.Infra.CrossCutting.IoC\Eventos.IO.Infra.CrossCutting.IoC.csproj", "{21F18FE5-9305-4F2E-B311-10E6212C44AA}"
 EndProject
@@ -32,8 +32,6 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Eventos.IO.Tests.Api", "tests\Eventos.IO.Tests.Api\Eventos.IO.Tests.Api.csproj", "{C918AD7F-E007-4BF4-A19A-FA5E80408732}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Eventos.IO.TestesAutomatizados", "tests\Eventos.IO.TestesAutomatizados\Eventos.IO.TestesAutomatizados.csproj", "{3BDC9DFC-EEA4-421E-BD30-2C91258D0A40}"
-EndProject
-Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{B169075B-9F63-4E43-97FA-1F7F5D9469E4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -77,10 +75,6 @@ Global
 		{3BDC9DFC-EEA4-421E-BD30-2C91258D0A40}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3BDC9DFC-EEA4-421E-BD30-2C91258D0A40}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3BDC9DFC-EEA4-421E-BD30-2C91258D0A40}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B169075B-9F63-4E43-97FA-1F7F5D9469E4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B169075B-9F63-4E43-97FA-1F7F5D9469E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B169075B-9F63-4E43-97FA-1F7F5D9469E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B169075B-9F63-4E43-97FA-1F7F5D9469E4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

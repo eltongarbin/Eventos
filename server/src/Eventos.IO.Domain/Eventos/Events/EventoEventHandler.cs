@@ -1,4 +1,6 @@
 ﻿using MediatR;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Eventos.IO.Domain.Eventos.Events
 {
@@ -9,29 +11,34 @@ namespace Eventos.IO.Domain.Eventos.Events
         INotificationHandler<EnderecoEventoAdicionadoEvent>,
         INotificationHandler<EnderecoEventoAtualizadoEvent>
     {
-        public void Handle(EventoRegistradoEvent message)
+        public Task Handle(EventoRegistradoEvent message, CancellationToken cancellationToken)
         {
             // TODO: Disparar alguma ação
+            return Task.CompletedTask;
         }
 
-        public void Handle(EventoAtualizadoEvent message)
+        public Task Handle(EventoAtualizadoEvent message, CancellationToken cancellationToken)
         {
             // TODO: Disparar alguma ação
+            return Task.CompletedTask;
         }
 
-        public void Handle(EventoExcluidoEvent message)
+        public Task Handle(EventoExcluidoEvent message, CancellationToken cancellationToken)
         {
             // TODO: Disparar alguma ação
+            return Task.CompletedTask;
         }
 
-        public void Handle(EnderecoEventoAdicionadoEvent message)
+        public Task Handle(EnderecoEventoAdicionadoEvent message, CancellationToken cancellationToken)
         {
             // TODO: Disparar alguma ação
+            return Task.CompletedTask;
         }
 
-        public void Handle(EnderecoEventoAtualizadoEvent message)
+        public Task Handle(EnderecoEventoAtualizadoEvent message, CancellationToken cancellationToken)
         {
             // TODO: Disparar alguma ação
+            return Task.CompletedTask;
         }
     }
 }

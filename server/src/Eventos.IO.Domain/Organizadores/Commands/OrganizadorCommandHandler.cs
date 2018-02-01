@@ -5,11 +5,13 @@ using Eventos.IO.Domain.Organizadores.Events;
 using Eventos.IO.Domain.Organizadores.Repository;
 using MediatR;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Eventos.IO.Domain.Organizadores.Commands
 {
     public class OrganizadorCommandHandler : CommandHandler,
-        INotificationHandler<RegistrarOrganizadorCommand>
+        IRequestHandler<RegistrarOrganizadorCommand>
     {
         private readonly IMediatorHandler _mediator;
         private readonly IOrganizadorRepository _organizadorRepository;
@@ -24,14 +26,14 @@ namespace Eventos.IO.Domain.Organizadores.Commands
             _organizadorRepository = organizadorRepository;
         }
 
-        public void Handle(RegistrarOrganizadorCommand message)
+        public Task Handle(RegistrarOrganizadorCommand message, CancellationToken cancellationToken)
         {
             var organizador = new Organizador(message.Id, message.Nome, message.CPF, message.Email);
 
             if (!organizador.EhValido())
             {
                 NotificarValidacoesErro(organizador.ValidationResult);
-                return;
+                return Task.CompletedTask;
             }
 
             var organizadorExistente = _organizadorRepository.Buscar(o => o.CPF == organizador.CPF || o.Email == organizador.Email);
@@ -42,6 +44,8 @@ namespace Eventos.IO.Domain.Organizadores.Commands
 
             if (Commit())
                 _mediator.PublicarEvento(new OrganizadorRegistradoEvent(organizador.Id, organizador.Nome, organizador.CPF, organizador.Email));
+            
+            return Task.CompletedTask;
         }
     }
 }

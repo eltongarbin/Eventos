@@ -17,22 +17,17 @@ namespace Eventos.IO.Domain.Handlers
             _eventStore = eventStore;
         }
 
-        public Task EnviarComando<T>(T comando) where T : Command
+        public async Task EnviarComando<T>(T comando) where T : Command
         {
-            return Publicar(comando);
+            await _mediator.Send(comando);
         }
 
-        public Task PublicarEvento<T>(T evento) where T : Event
+        public async Task PublicarEvento<T>(T evento) where T : Event
         {
             if (!evento.MessageType.Equals("DomainNotification"))
                 _eventStore?.SalvarEvento(evento);
 
-            return Publicar(evento);
-        }
-
-        private Task Publicar<T>(T mensagem) where T : Message
-        {
-            return _mediator.Publish(mensagem);
+            await _mediator.Publish(evento);
         }
     }
 }

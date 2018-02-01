@@ -15,6 +15,7 @@ namespace Eventos.IO.Domain.Eventos
         public string Estado { get; private set; }
         public Guid? EventoId { get; private set; }
 
+        // EF Propriedade de Navegação
         public virtual Evento Evento { get; private set; }
 
         public Endereco(Guid id,
@@ -38,6 +39,7 @@ namespace Eventos.IO.Domain.Eventos
             EventoId = eventoId;
         }
 
+        // Construtor para o EF
         protected Endereco() { }
 
         public override bool EhValido()
